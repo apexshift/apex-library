@@ -29,4 +29,5 @@ Thumbs.db
 .changeset/*.md   # keep only if you want to commit them manually
 
 # Build output - do not commit
+dist
 dist/
