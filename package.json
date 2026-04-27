@@ -25,7 +25,8 @@
     "changeset": "changeset",
     "version": "changesets version",
     "release": "changesets publish",
-    "prepare": "husky"
+    "prepare": "husky",
+    "size": "size-limit"
   },
   "lint-staged": {
     "src/**/*.js": [
@@ -47,6 +48,8 @@
     "@commitlint/cli": "^20.5.2",
     "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^10.0.1",
+    "@size-limit/preset-small-lib": "^12.1.0",
+    "@size-limit/time": "^12.1.0",
     "esbuild": "^0.28.0",
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
@@ -54,6 +57,19 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
+    "size-limit": "^12.1.0",
     "vite": "^8.0.10"
-  }
+  },
+  "size-limit": [
+    {
+      "path": "dist/index.js",
+      "limit": "5kb",
+      "running": false
+    },
+    {
+      "path": "dist/String/Effects/ScrambleEngine.js",
+      "limit": "8kb",
+      "running": false
+    }
+  ]
 }
