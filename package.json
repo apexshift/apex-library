@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "dev": "vite build --watch",
-    "build": "vite build && rm -rf dist/_virtual",
+    "build": "vite build",
     "preview": "vite build && echo 'Build complete. check dist/ folder'",
     "lint": "eslint src",
     "lint:fix": "pnpm lint --fix",
@@ -70,12 +70,12 @@
   "size-limit": [
     {
       "path": "dist/index.js",
-      "limit": "5kb",
+      "limit": "5 kb",
       "running": false
     },
     {
       "path": "dist/String/Effects/ScrambleEngine.js",
-      "limit": "8kb",
+      "limit": "8 kb",
       "running": false
     }
   ]
