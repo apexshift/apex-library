@@ -1,4 +1,13 @@
 /**
+ * @typedef {Object} ScrambleConfig
+ * @property {number} [fps=60]
+ * @property {string} [padChar=' ']
+ * @property {number} [transitionDuration=300]
+ * @property {Function} [callback]
+ * @property {number} [maxFrames=300]
+ */
+
+/**
  * ScrambleEngine - Core animation engine for text-based effects.
  * Optimized for performance while maintaining readability and extensibility.
  */
@@ -150,7 +159,10 @@ class ScrambleEngine {
   }
 
   /**
-   * convert text string to an array of characters
+   * Converts a text string to an array of characters.
+   * @param {string|Array} text - The text to convert.
+   * @returns {Array<string>} Array of characters.
+   * @private
    */
   _toCharArray(text) {
     if (typeof text === 'string') return [...text];
@@ -160,14 +172,18 @@ class ScrambleEngine {
   }
 
   /**
-   * convert an array of characters to a string
+   * Converts an array of characters to a string.
+   * @param {Array<string>} arr - The array to convert.
+   * @returns {string} The joined string.
+   * @private
    */
   _toString(arr) {
     return arr.join('');
   }
 
   /**
-   * get a random character fromt the cached character pool
+   * Gets a random character from the cached character pool.
+   * @returns {string} A random character.
    */
   getRandomChar() {
     return this._charPool[Math.floor(Math.random() * this._poolLength)];
@@ -334,6 +350,11 @@ class ScrambleEngine {
     if (this.config.callback) this.config.callback({ duration });
   }
 
+  /**
+   * Dispatches the completion event and calls the callback.
+   * @param {number} duration - The duration of the animation.
+   * @private
+   */
   _dispatchComplete(duration) {
     this.element.dispatchEvent(
       new CustomEvent('ScrambleEngine:complete', {

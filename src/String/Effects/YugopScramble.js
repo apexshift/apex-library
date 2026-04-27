@@ -1,10 +1,37 @@
 import ScrambleEngine from './ScrambleEngine.js';
 
 /**
+ * @typedef {Object} YugopConfig
+ * @property {string} [str]
+ * @property {'ltr'|'rtl'|'center'} [direction='ltr']
+ * @property {string} [waitChar=' ']
+ * @property {number} [moveFix=2]
+ * @property {number} [moveRange=4]
+ * @property {number} [charSpeed=1]
+ * @property {number} [moveTrigger=3]
+ * @extends {ScrambleConfig}
+ */
+
+/**
  * YugopScramble - Classic Yugo Nakamura effect with 3 clean reveal directions.
  * Directions: 'ltr' (default), 'rtl', 'center'
+ *
+ * @extends ScrambleEngine
  */
 class YugopScramble extends ScrambleEngine {
+  /**
+   * Constructor for YugopScramble.
+   * @param {Element|string} element - DOM element or selector.
+   * @param {Object} [options={}] - Configuration options.
+   * @param {string} [options.str=''] - Legacy target text.
+   * @param {string} [options.waitChar='-'] - Character to show while waiting.
+   * @param {number} [options.charSpeed=1] - Speed of character reveal.
+   * @param {number} [options.moveFix=25] - Base drift offset.
+   * @param {number} [options.moveRange=10] - Random drift range.
+   * @param {number} [options.moveTrigger=25] - Threshold for settling.
+   * @param {string} [options.direction='ltr'] - Reveal direction: 'ltr', 'rtl', or 'center'.
+   * @param {Object|string} [options.characterSet] - Character set configuration.
+   */
   constructor(element, options = {}) {
     const defaults = {
       str: '',
@@ -40,6 +67,9 @@ class YugopScramble extends ScrambleEngine {
     this.rightFront = 0;
   }
 
+  /**
+   * Initializes the animation state.
+   */
   init() {
     if (this.isRunning || !this.element) return;
     super.init();
@@ -81,6 +111,9 @@ class YugopScramble extends ScrambleEngine {
     }
   }
 
+  /**
+   * Performs the animation frame logic.
+   */
   animate() {
     let isAllSettled = true;
 
@@ -116,7 +149,12 @@ class YugopScramble extends ScrambleEngine {
     }
   }
 
-  /** Core logic for processing one character (shared by all directions) */
+  /**
+   * Core logic for processing one character (shared by all directions).
+   * @param {number} t - The index of the character to process.
+   * @returns {boolean} True if the character is settled.
+   * @private
+   */
   _processCharacter(t) {
     const offset = this.charIndices[t];
 
@@ -142,7 +180,10 @@ class YugopScramble extends ScrambleEngine {
     }
   }
 
-  /** Expand reveal range from center outward */
+  /**
+   * Expands reveal range from center outward.
+   * @private
+   */
   _expandFromCenter() {
     const speed = Math.ceil(this.config.charSpeed / 2);
     if (this.leftFront > 0) {
@@ -153,7 +194,10 @@ class YugopScramble extends ScrambleEngine {
     }
   }
 
-  /** Fill positions that are not yet revealed with waitChar */
+  /**
+   * Fills positions that are not yet revealed with waitChar.
+   * @private
+   */
   _fillUnrevealed() {
     for (let i = 0; i < this.paddedTarget.length; i++) {
       if (this.direction === 'center') {
@@ -169,7 +213,11 @@ class YugopScramble extends ScrambleEngine {
     }
   }
 
-  /** Check if animation is fully complete */
+  /**
+   * Checks if animation is fully complete.
+   * @returns {boolean} True if reveal is complete.
+   * @private
+   */
   _isRevealComplete() {
     if (this.direction === 'center') {
       return this.leftFront <= 0 && this.rightFront >= this.paddedTarget.length - 1;
@@ -181,6 +229,9 @@ class YugopScramble extends ScrambleEngine {
     }
   }
 
+  /**
+   * Stops the animation and resets state.
+   */
   stop() {
     super.stop();
     this.charIndices = [];

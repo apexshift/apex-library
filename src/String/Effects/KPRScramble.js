@@ -1,10 +1,27 @@
 import ScrambleEngine from './ScrambleEngine.js';
 
 /**
+ * @typedef {Object} KPRConfig
+ * @property {number} [iterationsMultiplier=1.5]
+ * @property {number} [transitionDuration=300]
+ * @extends {ScrambleConfig}
+ */
+
+/**
  * KPRScramble - Random character shuffle / reveal effect.
  * Inspired by hyperplexed-style shuffles, now optimized and clean.
+ * @extends ScrambleEngine
  */
 class KPRScramble extends ScrambleEngine {
+  /**
+   * Constructor for KPRScramble.
+   * @param {Element|string} element - DOM element or selector.
+   * @param {Object} [options={}] - Configuration options.
+   * @param {number} [options.iterationsMultiplier=3] - Multiplier for shuffle iterations.
+   * @param {Object|string} [options.characterSet] - Character set configuration.
+   * @param {number} [options.transitionDuration=50] - Fade transition duration in ms.
+   * @param {string} [options.direction='ltr'] - Reveal direction: 'ltr', 'rtl', or 'center'.
+   */
   constructor(element, options = {}) {
     const defaults = {
       iterationsMultiplier: 3, // Higher = slower, more dramatic shuffle
@@ -29,6 +46,9 @@ class KPRScramble extends ScrambleEngine {
     this.direction = validDirs.includes(this.config.direction) ? this.config.direction : 'ltr';
   }
 
+  /**
+   * Initializes the animation state.
+   */
   init() {
     if (this.isRunning || !this.element) return;
     super.init();
@@ -63,6 +83,9 @@ class KPRScramble extends ScrambleEngine {
     this.currentIterations = 0;
   }
 
+  /**
+   * Performs the animation frame logic.
+   */
   animate() {
     // Calculate how many characters should be revealed this frame
     const revealProgress = Math.floor(this.currentIterations);
@@ -95,7 +118,13 @@ class KPRScramble extends ScrambleEngine {
     }
   }
 
-  /** Direction-aware reveal logic */
+  /**
+   * Direction-aware reveal logic.
+   * @param {number} index - The character index.
+   * @param {number} progress - The current reveal progress.
+   * @returns {boolean} True if the position should be revealed.
+   * @private
+   */
   _isPositionRevealed(index, progress) {
     switch (this.direction) {
       case 'center': {
@@ -115,12 +144,18 @@ class KPRScramble extends ScrambleEngine {
     }
   }
 
+  /**
+   * Completes the animation and sets final text.
+   */
   completeAnimation() {
     // Force final clean text (remove padding)
     this.element.textContent = this.targetText;
     super.completeAnimation(); // Let base class handle events + callback
   }
 
+  /**
+   * Stops the animation and resets state.
+   */
   stop() {
     super.stop();
     this.displayArray = [];
