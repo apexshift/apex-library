@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dependencies
 node_modules
 .pnpm-store
@@ -27,3 +28,11 @@ Thumbs.db
 
 # Temporary
 .changeset/*.md   # keep only if you want to commit them manually
+=======
+## Template .gitignore file from MAMP PRO
+
+# On macOS you should ignore .DS_Store files.
+.DS_Store
+/node_modules
+/.husky
+>>>>>>> origin/main
