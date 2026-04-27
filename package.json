@@ -1,0 +1,44 @@
+{
+  "name": "apex",
+  "version": "0.0.1",
+  "description": "Apex - High-performance vanilla JS library for text effects and more",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./String/Effects": "./dist/String/Effects/index.js",
+    "./String/Effects/*": "./dist/String/Effects/*.js",
+    "./String/Effects/YugopScramble": "./dist/String/Effects/YugopScramble.js"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "preview": "vite build && echo 'Build complete. check dist/ folder'",
+    "lint": "eslint src",
+    "lint:fix": "pnpm lint --fix",
+    "format": "prettier --write src"
+  },
+  "keywords": [
+    "javascript",
+    "vanilla-js",
+    "text-effects",
+    "animation"
+  ],
+  "author": "Aaron Smyth",
+  "license": "MIT",
+  "packageManager": "pnpm@10.33.2",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.3",
+    "vite": "^8.0.10"
+  }
+}
