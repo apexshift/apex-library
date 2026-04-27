@@ -59,21 +59,25 @@ class YugopScramble extends ScrambleEngine {
 
     // Direction-specific initialization
     switch (this.direction) {
-      case 'center':
+      case 'center': {
         const mid = Math.floor(len / 2);
         this.leftFront = mid;
         this.rightFront = mid;
         break;
+      }
 
-      case 'ltr':
-        this.leftFront = 0;
-        this.rightFront = 0;
-        break;
-
-      case 'rtl':
+      case 'rtl': {
         this.leftFront = len - 1;
         this.rightFront = len - 1;
         break;
+      }
+
+      case 'ltr':
+      default: {
+        this.leftFront = 0;
+        this.rightFront = 0;
+        break;
+      }
     }
   }
 

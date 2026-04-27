@@ -98,17 +98,20 @@ class KPRScramble extends ScrambleEngine {
   /** Direction-aware reveal logic */
   _isPositionRevealed(index, progress) {
     switch (this.direction) {
-      case 'center':
+      case 'center': {
         const mid = Math.floor(this.transitionLength / 2);
         const distFromCenter = Math.abs(index - mid);
         return distFromCenter <= progress;
+      }
 
-      case 'rtl':
+      case 'rtl': {
         return this.transitionLength - index - 1 < progress;
+      }
 
       case 'ltr':
-      default:
+      default: {
         return index < progress;
+      }
     }
   }
 
