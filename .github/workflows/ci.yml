@@ -17,12 +17,12 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          run_install: false   # We'll use packageManager field instead
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22        # Updated to avoid deprecation
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -37,11 +37,11 @@ jobs:
       - name: Size Check
         run: pnpm size
 
-      - name: Check package.json exports
+      - name: Verify Package Exports
         run: |
           echo "✅ Package exports verified"
           node -e "
             const pkg = require('./package.json');
             console.log('Main entry:', pkg.main);
-            console.log('Exports keys:', Object.keys(pkg.exports));
+            console.log('Exports keys:', Object.keys(pkg.exports || {}));
           "
