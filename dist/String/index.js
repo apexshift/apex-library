@@ -4,5 +4,3 @@ var f = /* @__PURE__ */ r({ Effects: () => t });
 export {
   f as String_exports
 };
-
-//# sourceMappingURL=index.js.map

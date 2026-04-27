@@ -10,5 +10,3 @@ var c = /* @__PURE__ */ r({
 export {
   c as Effects_exports
 };
-
-//# sourceMappingURL=index.js.map

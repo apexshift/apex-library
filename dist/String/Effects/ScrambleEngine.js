@@ -103,5 +103,3 @@ var s = class i {
 export {
   s as default
 };
-
-//# sourceMappingURL=ScrambleEngine.js.map

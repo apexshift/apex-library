@@ -1,0 +1,23 @@
+# Tooling & dev files
+.github
+.vscode
+.idea
+examples
+.changeset
+*.log
+*.config.js
+.prettierrc
+.commitlintrc.json
+
+# Build artifacts
+dist/**/*.map
+dist/_virtual
+dist/_virtual/**
+
+# Markdown
+*.md
+!README.md
+!LICENSE
+
+# OS
+.DS_Store

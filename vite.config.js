@@ -1,3 +1,4 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -12,11 +13,10 @@ export default defineConfig({
         preserveModulesRoot: 'src',
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
-        manualChunks: undefined,
       },
     },
     minify: 'esbuild',
-    sourcemap: true,
+    sourcemap: false, // ← Standard for published libraries
     emptyOutDir: true,
     target: 'es2022',
   },

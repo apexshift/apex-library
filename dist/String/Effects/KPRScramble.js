@@ -34,9 +34,10 @@ var a = class extends s {
   }
   _isPositionRevealed(e, t) {
     switch (this.direction) {
-      case "center":
+      case "center": {
         const n = Math.floor(this.transitionLength / 2);
         return Math.abs(e - n) <= t;
+      }
       case "rtl":
         return this.transitionLength - e - 1 < t;
       default:
@@ -53,5 +54,3 @@ var a = class extends s {
 export {
   a as KPRScramble
 };
-
-//# sourceMappingURL=KPRScramble.js.map

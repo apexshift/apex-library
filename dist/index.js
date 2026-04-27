@@ -3,5 +3,3 @@ console.log("Apex library loaded.");
 export {
   r as String
 };
-
-//# sourceMappingURL=index.js.map

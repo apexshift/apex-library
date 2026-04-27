@@ -48,5 +48,3 @@ var n = class extends i {
 export {
   n as WriterScramble
 };
-
-//# sourceMappingURL=WriterScramble.js.map

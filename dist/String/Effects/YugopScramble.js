@@ -34,15 +34,16 @@ var a = class extends r {
       const e = this.config.moveFix + Math.round(Math.random() * this.config.moveRange);
       return Math.random() > 0.5 ? e : -e;
     }), this.direction) {
-      case "center":
+      case "center": {
         const i = Math.floor(t / 2);
         this.leftFront = i, this.rightFront = i;
         break;
-      case "ltr":
-        this.leftFront = 0, this.rightFront = 0;
-        break;
+      }
       case "rtl":
         this.leftFront = t - 1, this.rightFront = t - 1;
+        break;
+      default:
+        this.leftFront = 0, this.rightFront = 0;
         break;
     }
   }
@@ -88,5 +89,3 @@ var a = class extends r {
 export {
   a as YugopScramble
 };
-
-//# sourceMappingURL=YugopScramble.js.map
