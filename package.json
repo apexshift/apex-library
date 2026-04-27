@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Apex - High-performance vanilla JS library for text effects and more",
   "type": "module",
   "main": "./dist/index.js",
