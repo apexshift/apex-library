@@ -1,0 +1,15 @@
+.github
+.vscode
+.idea
+examples
+.changeset
+*.log
+*.config.js
+.prettierrc
+.commitlintrc.json
+cleanup-build.js
+tsconfig.json
+
+# Exclude internal Rolldown file from published package
+dist/_virtual
+dist/**/*.map
