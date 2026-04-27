@@ -27,3 +27,6 @@ Thumbs.db
 
 # Temporary
 .changeset/*.md   # keep only if you want to commit them manually
+
+# Build output - do not commit
+dist/
