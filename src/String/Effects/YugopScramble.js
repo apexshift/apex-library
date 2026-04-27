@@ -84,7 +84,8 @@ class YugopScramble extends ScrambleEngine {
     this.charIndices = this._toCharArray(this.paddedTarget).map((char) => {
       if (char === ' ') return 0;
       const offset = this.config.moveFix + Math.round(Math.random() * this.config.moveRange);
-      return Math.random() > 0.5 ? offset : -offset;
+      const result = Math.random() > 0.5 ? offset : -offset;
+      return result === 0 ? 0 : result;
     });
 
     // Direction-specific initialization
