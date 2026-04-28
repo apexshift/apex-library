@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apex EventEmitter — Live Demo</title>
+    <link rel="stylesheet" href="demo.css" />
+  </head>
+  <body>
+    <a href="../" class="back-link">← All Examples</a>
+    <div class="container">
+      <h1>Apex EventEmitter Demo</h1>
+
+      <div class="demo section">
+        <h2>Basic Event Emission</h2>
+        <p>Click to emit events and see listeners respond.</p>
+        <button id="emit-basic">Emit 'click' Event</button>
+        <button id="emit-data">Emit 'data' with Payload</button>
+        <div class="output" id="basic-output"></div>
+      </div>
+
+      <div class="demo section">
+        <h2>Once vs On</h2>
+        <p>'once' listeners fire only once, 'on' listeners fire every time.</p>
+        <button id="emit-once-test">Emit 'test' Event</button>
+        <div class="output" id="once-output"></div>
+      </div>
+
+      <div class="demo section">
+        <h2>Error Handling</h2>
+        <p>EventEmitter handles callback errors gracefully.</p>
+        <button id="emit-error">Emit with Erroring Listener</button>
+        <div class="output" id="error-output"></div>
+      </div>
+
+      <div class="demo section">
+        <h2>Unsubscribe</h2>
+        <p>Remove listeners dynamically.</p>
+        <button id="emit-unsub">Emit 'unsub-test'</button>
+        <button id="unsubscribe">Unsubscribe First Listener</button>
+        <div class="output" id="unsub-output"></div>
+      </div>
+    </div>
+
+    <script type="module" src="demo.js"></script>
+  </body>
+</html>

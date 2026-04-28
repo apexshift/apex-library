@@ -1,0 +1,63 @@
+.back-link {
+  display: inline-block;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.8rem;
+  color: #888;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  z-index: 1000;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #fff;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0a0a0a;
+  color: #fff;
+  padding: 40px;
+  line-height: 1.6;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 60px;
+}
+.demo {
+  background: #111;
+  padding: 40px;
+  margin: 40px 0;
+  border-radius: 16px;
+  border: 1px solid #333;
+}
+.effect {
+  font-size: 3.2rem;
+  font-weight: 700;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  text-align: center;
+}
+button {
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  margin: 8px;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover {
+  background: #ddd;
+}

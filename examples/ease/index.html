@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apex Ease — Live Demo</title>
+    <link rel="stylesheet" href="demo.css" />
+  </head>
+  <body>
+    <a href="../" class="back-link">← All Examples</a>
+    <div class="container">
+      <h1>Apex Ease Demo</h1>
+
+      <div class="demo">
+        <h2>Easing Function Explorer</h2>
+        <p>Select an easing function or enter a custom cubic-bezier string to see it in action.</p>
+
+        <div class="controls">
+          <div class="control-group">
+            <label>Easing Function</label>
+            <select id="easing-select">
+              <option value="">Select easing...</option>
+              <optgroup label="Power">
+                <option value="inQuad">inQuad</option>
+                <option value="outQuad">outQuad</option>
+                <option value="inOutQuad">inOutQuad</option>
+                <option value="inCubic">inCubic</option>
+                <option value="outCubic">outCubic</option>
+                <option value="inOutCubic">inOutCubic</option>
+                <option value="inQuart">inQuart</option>
+                <option value="outQuart">outQuart</option>
+                <option value="inOutQuart">inOutQuart</option>
+                <option value="inQuint">inQuint</option>
+                <option value="outQuint">outQuint</option>
+                <option value="inOutQuint">inOutQuint</option>
+              </optgroup>
+              <optgroup label="Trigonometric">
+                <option value="inSine">inSine</option>
+                <option value="outSine">outSine</option>
+                <option value="inOutSine">inOutSine</option>
+              </optgroup>
+              <optgroup label="Exponential">
+                <option value="inExpo">inExpo</option>
+                <option value="outExpo">outExpo</option>
+                <option value="inOutExpo">inOutExpo</option>
+              </optgroup>
+              <optgroup label="Circular">
+                <option value="inCirc">inCirc</option>
+                <option value="outCirc">outCirc</option>
+                <option value="inOutCirc">inOutCirc</option>
+              </optgroup>
+              <optgroup label="Back">
+                <option value="inBack">inBack</option>
+                <option value="outBack">outBack</option>
+                <option value="inOutBack">inOutBack</option>
+              </optgroup>
+              <optgroup label="Elastic">
+                <option value="inElastic">inElastic</option>
+                <option value="outElastic">outElastic</option>
+                <option value="inOutElastic">inOutElastic</option>
+              </optgroup>
+              <optgroup label="Bounce">
+                <option value="inBounce">inBounce</option>
+                <option value="outBounce">outBounce</option>
+                <option value="inOutBounce">inOutBounce</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="control-group">
+            <label>Custom Bezier</label>
+            <input type="text" id="bezier-input" placeholder="cubic-bezier(0.25, 0.1, 0.25, 1)" />
+          </div>
+          <button id="play-animation">Play Animation</button>
+          <button id="reset-animation">Reset</button>
+        </div>
+
+        <div id="error-message" class="error" style="display: none"></div>
+
+        <div class="animation-section">
+          <div class="animated-box" id="animated-box"></div>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="curve-canvas">
+          <canvas id="curve-canvas" width="800" height="300"></canvas>
+        </div>
+
+        <div class="info">
+          <div>Current: <span id="current-easing">Linear</span></div>
+          <div>Sample at t=0.5: <span id="sample-value">0.500</span></div>
+        </div>
+      </div>
+
+      <div class="demo">
+        <h2>Easing Gallery</h2>
+        <p>Click any easing function below to preview it.</p>
+        <div class="easing-grid" id="easing-grid"></div>
+      </div>
+    </div>
+
+    <script type="module" src="demo.js"></script>
+  </body>
+</html>

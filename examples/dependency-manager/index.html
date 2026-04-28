@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dependency Manager Demo — Apex Library</title>
+    <link rel="stylesheet" href="demo.css" />
+  </head>
+  <body>
+    <a href="../" class="back-link">← All Examples</a>
+    <div class="container">
+      <header class="header">
+        <h1>🚀 Dependency Manager Demo</h1>
+        <p>
+          Experience all 15 core features of the Apex Library's advanced dependency management
+          system
+        </p>
+      </header>
+
+      <!-- Features Overview -->
+      <section class="features-grid">
+        <div class="feature-card">
+          <h3><span class="icon">🔄</span> Singleton Pattern</h3>
+          <p>Ensures only one instance exists globally, preventing conflicts and resource waste.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">⚡</span> Lazy Loading</h3>
+          <p>Dependencies are loaded on-demand, improving initial page load performance.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">📋</span> Configuration Management</h3>
+          <p>Reads from JSON config and supports runtime overrides for maximum flexibility.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">🔗</span> Dependency Resolution</h3>
+          <p>Automatically resolves and includes missing dependencies based on a smart graph.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">📦</span> Smart Instantiation</h3>
+          <p>Special handling for Lenis with custom easing, plus generic module instantiation.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">🔧</span> Plugin Registration</h3>
+          <p>Automatically registers all loaded GSAP plugins with the GSAP core.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">⚖️</span> Conflict Resolution</h3>
+          <p>Intelligently resolves conflicts between Lenis and ScrollSmoother scroll libraries.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">🔄</span> Smart Synchronization</h3>
+          <p>Seamlessly syncs Lenis with GSAP's ticker and ScrollTrigger for perfect harmony.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">📡</span> Event System</h3>
+          <p>Comprehensive event emission for all important lifecycle moments.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">👁️</span> State Getters</h3>
+          <p>Provides isReady and loaded getters for checking system state.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">🌐</span> Global Access</h3>
+          <p>Attaches loaded dependencies to window.Apex for global accessibility.</p>
+        </div>
+        <div class="feature-card">
+          <h3><span class="icon">🎨</span> Developer Experience</h3>
+          <p>Colored console messages and helpful logging for development environments.</p>
+        </div>
+      </section>
+
+      <!-- Interactive Demo -->
+      <section class="demo-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span class="status-indicator" id="dm-status"></span>
+            Interactive Feature Demo
+          </h2>
+        </div>
+
+        <div class="control-panel">
+          <div class="control-group">
+            <h3><span class="icon">📦</span> Core Dependencies</h3>
+            <div class="checkbox-grid">
+              <label class="checkbox-item">
+                <input type="checkbox" id="gsap" checked />
+                <span>GSAP</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="lenis" checked />
+                <span>Lenis</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <h3><span class="icon">🔧</span> GSAP Plugins (23 Available)</h3>
+            <div class="checkbox-grid">
+              <label class="checkbox-item">
+                <input type="checkbox" class="plugin-checkbox" id="ScrollTrigger" />
+                <span>ScrollTrigger</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" class="plugin-checkbox" id="ScrollSmoother" />
+                <span>ScrollSmoother</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" class="plugin-checkbox" id="CustomEase" />
+                <span>CustomEase</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" class="plugin-checkbox" id="CustomBounce" />
+                <span>CustomBounce</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" class="plugin-checkbox" id="CustomWiggle" />
+                <span>CustomWiggle</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" class="plugin-checkbox" id="DrawSVGPlugin" />
+                <span>DrawSVG</span>
+              </label>
+            </div>
+            <details style="margin-top: 15px">
+              <summary style="cursor: pointer; color: #667eea; font-weight: 500">
+                Show All 23 Plugins
+              </summary>
+              <div class="checkbox-grid" style="margin-top: 10px">
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="EaselPlugin" /><span>EaselPlugin</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="EasePack" /><span>EasePack</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="Flip" /><span>Flip</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="GSDevTools" /><span>GSDevTools</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="InertiaPlugin" /><span>InertiaPlugin</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="MorphSVGPlugin" /><span>MorphSVG</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="MotionPathHelper" /><span>MotionPathHelper</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="MotionPathPlugin" /><span>MotionPath</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="Observer" /><span>Observer</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="Physics2DPlugin" /><span>Physics2D</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="PhysicsPropsPlugin" /><span>PhysicsProps</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="PixiPlugin" /><span>PixiPlugin</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="ScrambleTextPlugin" /><span>ScrambleText</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="SplitText" /><span>SplitText</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="TextPlugin" /><span>TextPlugin</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="Draggable" /><span>Draggable</span></label>
+                <label class="checkbox-item"><input type="checkbox" class="plugin-checkbox" id="ScrollToPlugin" /><span>ScrollTo</span></label>
+              </div>
+            </details>
+          </div>
+
+          <div class="control-group">
+            <h3><span class="icon">⚖️</span> Scroll Library Preference</h3>
+            <p style="font-size: 0.9rem; color: #6c757d; margin-bottom: 15px">
+              Choose which scroll library to prioritize. The system will automatically resolve conflicts.
+            </p>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="scroller" value="lenis" checked />
+                <span class="radio-label">Lenis (Smooth)</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="scroller" value="ScrollSmoother" />
+                <span class="radio-label">ScrollSmoother</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button class="btn btn-primary" id="load-btn">🚀 Load Dependencies</button>
+          <button class="btn btn-danger" id="reset-btn" disabled>🔄 Reset System</button>
+          <button class="btn btn-secondary" id="clear-btn">🧹 Clear Logs</button>
+          <button class="btn btn-success" id="animate-btn" disabled>🎬 Test Animation</button>
+        </div>
+
+        <div class="logs-container" id="logs">
+          <div class="log-entry log-info">
+            Welcome to the Dependency Manager Demo! Click "Load Dependencies" to get started.
+          </div>
+        </div>
+      </section>
+
+      <!-- Feature Showcase -->
+      <section class="demo-section">
+        <h2 class="section-title">🎯 Feature Showcase</h2>
+
+        <div class="feature-showcase">
+          <div class="showcase-item">
+            <h4><span class="icon">📊</span> Loaded Dependencies</h4>
+            <p>Watch dependencies load in the correct order with automatic resolution of missing requirements.</p>
+            <div class="dependency-grid" id="dependency-grid">
+              <div class="dependency-card">
+                <h4>📋 No dependencies loaded</h4>
+                <div class="status">Waiting for initialization...</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="showcase-item">
+            <h4><span class="icon">🎨</span> GSAP Animation Demo</h4>
+            <p>Test GSAP animations after loading dependencies. Demonstrates plugin registration and global access.</p>
+            <div class="demo-area">
+              <div class="animated-box" id="animated-box">GSAP</div>
+              <button class="btn btn-primary" id="trigger-animation" disabled style="width: auto; margin: 0">
+                Trigger Animation
+              </button>
+            </div>
+          </div>
+
+          <div class="showcase-item">
+            <h4><span class="icon">📡</span> Event Timeline</h4>
+            <p>Real-time event emissions showing the dependency loading lifecycle.</p>
+            <div class="event-timeline" id="event-timeline">
+              <div class="timeline-item">
+                <span class="time">--:--:--</span>
+                <span class="event">Waiting for initialization...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Smooth Scrolling Demo -->
+      <section class="demo-section">
+        <div class="section-header">
+          <h2 class="section-title">🎯 Smooth Scrolling Demo</h2>
+          <div style="font-size: 0.9rem; color: #6c757d">
+            Test different scroll libraries. Use "Reset System" to switch between Lenis and ScrollSmoother.
+          </div>
+        </div>
+
+        <div class="scroll-demo">
+          <h4>Scroll Down to Experience Smooth Scrolling</h4>
+          <p>Current scroll library: <strong id="current-scroller">None</strong></p>
+          <div class="scroll-content" id="scroll-content">
+            <div class="scroll-section" style="background: rgba(255, 255, 255, 0.1)">
+              Section 1<br /><small>Scroll down for smooth experience</small>
+            </div>
+            <div class="scroll-section" style="background: rgba(255, 255, 255, 0.15)">
+              Section 2<br /><small>Feel the difference with Lenis or ScrollSmoother</small>
+            </div>
+            <div class="scroll-section" style="background: rgba(255, 255, 255, 0.1)">
+              Section 3<br /><small>Automatic conflict resolution in action</small>
+            </div>
+            <div class="scroll-section" style="background: rgba(255, 255, 255, 0.15)">
+              Section 4<br /><small>Smart synchronization with GSAP</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Implementation Guide -->
+      <section class="demo-section">
+        <h2 class="section-title">📚 Implementation Guide</h2>
+        <p style="text-align: center; margin-bottom: 30px; color: #6c757d;">
+          Learn how to integrate the DependencyManager into your projects
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+          <div class="showcase-item" style="width: 100%;">
+            <h4><span class="icon">🚀</span> Basic Setup</h4>
+            <div class="demo-area">
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-size: 13px; overflow-x: auto; margin: 0;"><code>// Import the DependencyManager
+import { DependencyManager } from './path/to/DependencyManager.js';
+
+// Get the singleton instance
+const dm = DependencyManager.getInstance();
+
+// Initialize with your dependencies
+await dm.init({
+  core: ['gsap'],           // Core libraries
+  gsap_plugins: ['ScrollTrigger', 'ScrollSmoother'], // GSAP plugins
+  preferredScroller: 'lenis', // 'lenis' or 'ScrollSmoother'
+  instantiate: ['lenis']    // Auto-instantiate these modules
+});
+
+// Your dependencies are now available globally!
+console.log(window.Apex.deps); // { gsap: {...}, ScrollTrigger: {...}, lenis: {...} }</code></pre>
+            </div>
+          </div>
+
+          <div class="showcase-item" style="width: 100%;">
+            <h4><span class="icon">⚙️</span> Configuration Options</h4>
+            <div class="demo-area">
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-size: 13px; overflow-x: auto; margin: 0;"><code>await dm.init({
+  // Core dependencies (always loaded first)
+  core: ['gsap', 'lenis'],
+
+  // GSAP plugins (auto-resolves dependencies)
+  gsap_plugins: [
+    'ScrollTrigger',    // Requires: gsap
+    'ScrollSmoother',   // Requires: gsap, ScrollTrigger
+    'CustomEase'        // Requires: gsap
+  ],
+
+  // Scroll library preference
+  preferredScroller: 'lenis', // or 'ScrollSmoother'
+
+  // Auto-instantiate these modules
+  instantiate: ['lenis'],
+
+  // Custom Lenis configuration
+  lenisConfig: {
+    duration: 1.2,
+    easing: 'outCubic',
+    smoothWheel: true
+  }
+});</code></pre>
+            </div>
+          </div>
+
+          <div class="showcase-item" style="width: 100%;">
+            <h4><span class="icon">📡</span> Event Handling</h4>
+            <div class="demo-area">
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-size: 13px; overflow-x: auto; margin: 0;"><code>dm.on('init:start', () => console.log('🚀 Loading dependencies...'));
+
+dm.on('dep:loaded', (data) => console.log(`✅ ${data.name} loaded`));
+
+dm.on('plugin:registered', (data) => console.log(`🔧 ${data.name} registered with GSAP`));
+
+dm.on('ready', () => {
+  console.log('🎉 All dependencies ready!');
+  const { gsap, ScrollTrigger } = window.Apex.deps;
+});
+
+if (dm.isReady) {
+  const loadedDeps = dm.loaded;
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="showcase-item" style="width: 100%;">
+            <h4><span class="icon">🎨</span> Real-world Usage</h4>
+            <div class="demo-area">
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-size: 13px; overflow-x: auto; margin: 0;"><code>async function initApp() {
+  const dm = DependencyManager.getInstance();
+
+  try {
+    await dm.init({
+      core: ['gsap'],
+      gsap_plugins: ['ScrollTrigger', 'ScrollSmoother'],
+      preferredScroller: 'lenis',
+      instantiate: ['lenis']
+    });
+
+    initAnimations();
+    initScrollEffects();
+  } catch (error) {
+    console.error('Failed to load dependencies:', error);
+  }
+}
+
+function initAnimations() {
+  const { gsap, ScrollTrigger } = window.Apex.deps;
+
+  gsap.from('.hero-title', { y: 50, opacity: 0, duration: 1, ease: 'power2.out' });
+
+  ScrollTrigger.create({
+    trigger: '.section',
+    start: 'top center',
+    onEnter: () => console.log('Section entered viewport')
+  });
+}
+
+function initScrollEffects() {
+  const lenis = window.Apex.deps.lenis;
+  lenis.on('scroll', (data) => { /* handle scroll */ });
+}
+
+initApp();</code></pre>
+            </div>
+          </div>
+
+          <div class="showcase-item" style="width: 100%;">
+            <h4><span class="icon">🔄</span> Advanced Patterns</h4>
+            <div class="demo-area">
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; font-size: 13px; overflow-x: auto; margin: 0;"><code>// Conditional loading based on page
+const pageConfig = {
+  home: { core: ['gsap', 'lenis'], gsap_plugins: ['ScrollTrigger', 'ScrollSmoother'] },
+  about: { core: ['gsap'], gsap_plugins: ['ScrollTrigger'] },
+  contact: { core: ['gsap'], gsap_plugins: ['CustomEase'] }
+};
+
+const currentPage = window.location.pathname.split('/').pop() || 'home';
+await dm.init(pageConfig[currentPage] || pageConfig.home);
+
+// Dynamic plugin loading
+async function loadPluginOnDemand(pluginName) {
+  if (!dm.loaded[pluginName]) {
+    await dm.init({ gsap_plugins: [pluginName] });
+  }
+  return dm.loaded[pluginName];
+}
+
+// Error handling
+dm.on('error', (data) => {
+  console.error(`Failed to load ${data.name}:`, data.error);
+  if (data.name === 'lenis') console.log('Falling back to native scroll');
+});</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 30px; background: #f8f9fa; border-radius: 12px;">
+          <h3 style="color: #2c3e50; margin-bottom: 15px;">🎯 Key Benefits</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+            <div style="text-align: left;"><h4 style="color: #667eea; margin-bottom: 8px;">⚡ Performance</h4><p style="font-size: 14px; color: #6c757d; margin: 0;">Lazy loading prevents unnecessary bundle bloat</p></div>
+            <div style="text-align: left;"><h4 style="color: #667eea; margin-bottom: 8px;">🔄 Automatic</h4><p style="font-size: 14px; color: #6c757d; margin: 0;">Dependency resolution and conflict handling</p></div>
+            <div style="text-align: left;"><h4 style="color: #667eea; margin-bottom: 8px;">🎨 Developer Experience</h4><p style="font-size: 14px; color: #6c757d; margin: 0;">Clear events and helpful console messages</p></div>
+            <div style="text-align: left;"><h4 style="color: #667eea; margin-bottom: 8px;">🌐 Global Access</h4><p style="font-size: 14px; color: #6c757d; margin: 0;">Dependencies available via window.Apex</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Platform & CMS Integration -->
+      <section class="demo-section">
+        <h2 class="section-title">🌐 Platform &amp; CMS Integration</h2>
+        <p style="text-align: center; margin-bottom: 40px; color: #6c757d;">
+          Drop-in integration patterns for popular platforms and CMS environments
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 40px;">
+
+          <!-- React -->
+          <div style="border-radius: 14px; overflow: hidden; border: 1px solid #e9ecef; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+            <div style="background: linear-gradient(135deg, #61dafb 0%, #21a1c4 100%); padding: 20px 28px; display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">⚛️</span>
+              <div>
+                <h3 style="color: white; margin: 0; font-size: 1.3rem; font-weight: 700;">React</h3>
+                <p style="color: rgba(255,255,255,0.85); margin: 4px 0 0; font-size: 0.9rem;">Custom hook pattern with cleanup</p>
+              </div>
+            </div>
+            <div style="padding: 24px; background: white;">
+              <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.95rem;">Create a reusable <code style="background:#f0f4ff;padding:2px 6px;border-radius:4px;color:#667eea;">useDependencyManager</code> hook. Call it once at the app root — the singleton ensures all child components share the same loaded state.</p>
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 22px; border-radius: 10px; font-size: 13px; overflow-x: auto; margin: 0; line-height: 1.6;"><code>// hooks/useDependencyManager.js
+import { useEffect, useState } from 'react';
+import { DependencyManager } from '@apex/library';
+
+export function useDependencyManager(config) {
+  const [isReady, setIsReady] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const dm = DependencyManager.getInstance();
+    dm.on('ready', () => setIsReady(true));
+    dm.on('error', (data) => setError(data.error));
+    dm.init(config).catch(setError);
+  }, []);
+
+  return { isReady, error, deps: window.Apex?.deps ?? {} };
+}
+
+// App.jsx
+export default function App() {
+  const { isReady, deps } = useDependencyManager({
+    core: ['gsap', 'lenis'],
+    gsap_plugins: ['ScrollTrigger'],
+    preferredScroller: 'lenis',
+    instantiate: ['lenis'],
+  });
+
+  if (!isReady) return &lt;div&gt;Loading...&lt;/div&gt;;
+  return &lt;main&gt;&lt;HeroSection gsap={deps.gsap} /&gt;&lt;/main&gt;;
+}</code></pre>
+            </div>
+          </div>
+
+          <!-- Vue 3 -->
+          <div style="border-radius: 14px; overflow: hidden; border: 1px solid #e9ecef; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+            <div style="background: linear-gradient(135deg, #42d392 0%, #33a06f 100%); padding: 20px 28px; display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">💚</span>
+              <div>
+                <h3 style="color: white; margin: 0; font-size: 1.3rem; font-weight: 700;">Vue 3</h3>
+                <p style="color: rgba(255,255,255,0.85); margin: 4px 0 0; font-size: 0.9rem;">Composable + app-level plugin</p>
+              </div>
+            </div>
+            <div style="padding: 24px; background: white;">
+              <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.95rem;">Expose the DependencyManager as a Vue plugin installed in <code style="background:#f0fff4;padding:2px 6px;border-radius:4px;color:#33a06f;">main.js</code>, then consume via a <code style="background:#f0fff4;padding:2px 6px;border-radius:4px;color:#33a06f;">useApex()</code> composable anywhere in your component tree.</p>
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 22px; border-radius: 10px; font-size: 13px; overflow-x: auto; margin: 0; line-height: 1.6;"><code>// plugins/apex.js
+import { DependencyManager } from '@apex/library';
+import { ref, inject } from 'vue';
+
+const APEX_KEY = Symbol('apex');
+
+export const ApexPlugin = {
+  install(app, config = {}) {
+    const isReady = ref(false);
+    const dm = DependencyManager.getInstance();
+    dm.on('ready', () => { isReady.value = true; });
+    dm.init(config);
+    app.provide(APEX_KEY, { dm, isReady });
+  },
+};
+
+export function useApex() { return inject(APEX_KEY); }
+
+// main.js
+createApp(App)
+  .use(ApexPlugin, {
+    core: ['gsap', 'lenis'],
+    gsap_plugins: ['ScrollTrigger'],
+    preferredScroller: 'lenis',
+    instantiate: ['lenis'],
+  })
+  .mount('#app');</code></pre>
+            </div>
+          </div>
+
+          <!-- Shopify -->
+          <div style="border-radius: 14px; overflow: hidden; border: 1px solid #e9ecef; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+            <div style="background: linear-gradient(135deg, #96bf48 0%, #5c8a1e 100%); padding: 20px 28px; display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">🛍️</span>
+              <div>
+                <h3 style="color: white; margin: 0; font-size: 1.3rem; font-weight: 700;">Shopify</h3>
+                <p style="color: rgba(255,255,255,0.85); margin: 4px 0 0; font-size: 0.9rem;">Dawn / OS 2.0 themes — theme.liquid + asset file</p>
+              </div>
+            </div>
+            <div style="padding: 24px; background: white;">
+              <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.95rem;">Upload the compiled <code style="background:#f4fff0;padding:2px 6px;border-radius:4px;color:#5c8a1e;">DependencyManager.js</code> to your theme's <strong>Assets</strong> folder and reference it via the Liquid <code style="background:#f4fff0;padding:2px 6px;border-radius:4px;color:#5c8a1e;">asset_url</code> filter.</p>
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 22px; border-radius: 10px; font-size: 13px; overflow-x: auto; margin: 0; line-height: 1.6;"><code>&lt;!-- theme.liquid — just before &lt;/body&gt; --&gt;
+&lt;script type="module" src="{{ 'DependencyManager.js' | asset_url }}" defer&gt;&lt;/script&gt;
+
+&lt;script type="module"&gt;
+  import { DependencyManager } from "{{ 'DependencyManager.js' | asset_url }}";
+  const dm = DependencyManager.getInstance();
+
+  dm.on('ready', () => {
+    document.dispatchEvent(new CustomEvent('apex:ready', { detail: window.Apex.deps }));
+  });
+
+  dm.init({ core: ['gsap', 'lenis'], gsap_plugins: ['ScrollTrigger'],
+            preferredScroller: 'lenis', instantiate: ['lenis'] });
+&lt;/script&gt;
+
+&lt;!-- In any section/snippet --&gt;
+&lt;script type="module"&gt;
+  document.addEventListener('apex:ready', ({ detail }) => {
+    detail.gsap.from('.hero__title', { y: 40, opacity: 0, duration: 1 });
+  });
+&lt;/script&gt;</code></pre>
+            </div>
+          </div>
+
+          <!-- WordPress -->
+          <div style="border-radius: 14px; overflow: hidden; border: 1px solid #e9ecef; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+            <div style="background: linear-gradient(135deg, #21759b 0%, #135e7c 100%); padding: 20px 28px; display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">🔵</span>
+              <div>
+                <h3 style="color: white; margin: 0; font-size: 1.3rem; font-weight: 700;">WordPress</h3>
+                <p style="color: rgba(255,255,255,0.85); margin: 4px 0 0; font-size: 0.9rem;">Child theme via wp_enqueue_scripts</p>
+              </div>
+            </div>
+            <div style="padding: 24px; background: white;">
+              <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.95rem;">WordPress doesn't natively output <code>type="module"</code> — use a <code style="background:#f0f8ff;padding:2px 6px;border-radius:4px;color:#21759b;">script_loader_tag</code> filter to add it.</p>
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 22px; border-radius: 10px; font-size: 13px; overflow-x: auto; margin: 0; line-height: 1.6;"><code>// child-theme/functions.php
+add_action( 'wp_enqueue_scripts', function() {
+  wp_enqueue_script( 'apex-dm',
+    get_stylesheet_directory_uri() . '/js/DependencyManager.js',
+    [], null, [ 'strategy' => 'defer', 'in_footer' => true ] );
+
+  wp_enqueue_script( 'apex-init',
+    get_stylesheet_directory_uri() . '/js/apex-init.js',
+    [ 'apex-dm' ], null, [ 'strategy' => 'defer', 'in_footer' => true ] );
+} );
+
+add_filter( 'script_loader_tag', function( $tag, $handle ) {
+  if ( in_array( $handle, [ 'apex-dm', 'apex-init' ] ) ) {
+    return str_replace( ' src=', ' type="module" src=', $tag );
+  }
+  return $tag;
+}, 10, 2 );</code></pre>
+            </div>
+          </div>
+
+          <!-- Bricks Builder -->
+          <div style="border-radius: 14px; overflow: hidden; border: 1px solid #e9ecef; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+            <div style="background: linear-gradient(135deg, #ff6b35 0%, #c94a1a 100%); padding: 20px 28px; display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">🧱</span>
+              <div>
+                <h3 style="color: white; margin: 0; font-size: 1.3rem; font-weight: 700;">Bricks Builder</h3>
+                <p style="color: rgba(255,255,255,0.85); margin: 4px 0 0; font-size: 0.9rem;">Child theme — init after Bricks frontend scripts load</p>
+              </div>
+            </div>
+            <div style="padding: 24px; background: white;">
+              <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.95rem;">Hook into <code style="background:#fff4f0;padding:2px 6px;border-radius:4px;color:#c94a1a;">wp_enqueue_scripts</code> with priority 99 and wait for the <code style="background:#fff4f0;padding:2px 6px;border-radius:4px;color:#c94a1a;">bricksReady</code> event so all Bricks elements are in the DOM.</p>
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 22px; border-radius: 10px; font-size: 13px; overflow-x: auto; margin: 0; line-height: 1.6;"><code>// Same enqueue + filter as WordPress above, with priority 99
+add_action( 'wp_enqueue_scripts', function() { /* ... */ }, 99 );
+
+// js/apex-init.js
+import { DependencyManager } from './DependencyManager.js';
+
+async function init() {
+  const dm = DependencyManager.getInstance();
+  await dm.init({ core: ['gsap', 'lenis'], gsap_plugins: ['ScrollTrigger'],
+                  preferredScroller: 'lenis', instantiate: ['lenis'] });
+
+  const { gsap } = window.Apex.deps;
+  gsap.from('[data-apex-animate]', {
+    y: 40, opacity: 0, stagger: 0.12,
+    scrollTrigger: { trigger: '[data-apex-animate]', start: 'top 85%' },
+  });
+}
+
+// bricksReady fires once Bricks has mounted all elements
+document.addEventListener('bricksReady', init);</code></pre>
+            </div>
+          </div>
+
+          <!-- Webflow -->
+          <div style="border-radius: 14px; overflow: hidden; border: 1px solid #e9ecef; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+            <div style="background: linear-gradient(135deg, #4353ff 0%, #2533cc 100%); padding: 20px 28px; display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">🌊</span>
+              <div>
+                <h3 style="color: white; margin: 0; font-size: 1.3rem; font-weight: 700;">Webflow</h3>
+                <p style="color: rgba(255,255,255,0.85); margin: 4px 0 0; font-size: 0.9rem;">Custom code panel — no build step required</p>
+              </div>
+            </div>
+            <div style="padding: 24px; background: white;">
+              <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.95rem;">Go to <strong>Project Settings → Custom Code → Footer Code</strong>. Host the compiled JS on a CDN and import it as a module.</p>
+              <div style="background: #fffbf0; border: 1px solid #fde68a; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; font-size: 0.9rem; color: #92400e;">
+                <strong>⚠️ Webflow note:</strong> Webflow injects its own Lenis instance on some plans. Set <code>preferredScroller: 'lenis'</code> — the conflict resolver will detect and defer to Webflow's instance automatically.
+              </div>
+              <pre style="background: #1e1e1e; color: #d4d4d4; padding: 22px; border-radius: 10px; font-size: 13px; overflow-x: auto; margin: 0; line-height: 1.6;"><code>&lt;!-- Project Settings → Custom Code → Footer Code --&gt;
+&lt;script type="module"&gt;
+  import { DependencyManager } from 'https://cdn.yourdomain.com/apex/DependencyManager.js';
+
+  const dm = DependencyManager.getInstance();
+
+  dm.on('ready', () => {
+    const { gsap, ScrollTrigger } = window.Apex.deps;
+    gsap.utils.toArray('.cms-item').forEach((el, i) => {
+      gsap.from(el, { y: 30, opacity: 0, duration: 0.8, delay: i * 0.1,
+                      scrollTrigger: { trigger: el, start: 'top 88%' } });
+    });
+  });
+
+  // Webflow.push defers init until after IX2
+  window.Webflow ||= [];
+  window.Webflow.push(() => {
+    dm.init({ core: ['gsap'], gsap_plugins: ['ScrollTrigger', 'CustomEase'],
+              preferredScroller: 'lenis' });
+  });
+&lt;/script&gt;</code></pre>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Platform summary table -->
+        <div style="margin-top: 40px; overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+            <thead>
+              <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <th style="padding: 14px 18px; text-align: left; font-weight: 600;">Platform</th>
+                <th style="padding: 14px 18px; text-align: left; font-weight: 600;">Load Strategy</th>
+                <th style="padding: 14px 18px; text-align: left; font-weight: 600;">Init Hook</th>
+                <th style="padding: 14px 18px; text-align: left; font-weight: 600;">ES Modules</th>
+                <th style="padding: 14px 18px; text-align: left; font-weight: 600;">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: white; border-bottom: 1px solid #f0f0f0;"><td style="padding: 12px 18px; font-weight: 600;">⚛️ React</td><td style="padding: 12px 18px;">npm bundle</td><td style="padding: 12px 18px;"><code style="font-size:12px;background:#f5f5f5;padding:2px 5px;border-radius:4px;">useEffect</code></td><td style="padding: 12px 18px; color: #27ae60;">✅ Native</td><td style="padding: 12px 18px; color: #6c757d;">Custom hook for clean reuse</td></tr>
+              <tr style="background: #fafafa; border-bottom: 1px solid #f0f0f0;"><td style="padding: 12px 18px; font-weight: 600;">💚 Vue 3</td><td style="padding: 12px 18px;">npm bundle</td><td style="padding: 12px 18px;"><code style="font-size:12px;background:#f5f5f5;padding:2px 5px;border-radius:4px;">onMounted</code></td><td style="padding: 12px 18px; color: #27ae60;">✅ Native</td><td style="padding: 12px 18px; color: #6c757d;">Plugin + composable pattern</td></tr>
+              <tr style="background: white; border-bottom: 1px solid #f0f0f0;"><td style="padding: 12px 18px; font-weight: 600;">🛍️ Shopify</td><td style="padding: 12px 18px;">Asset CDN</td><td style="padding: 12px 18px;"><code style="font-size:12px;background:#f5f5f5;padding:2px 5px;border-radius:4px;">DOMContentLoaded</code></td><td style="padding: 12px 18px; color: #27ae60;">✅ Via filter</td><td style="padding: 12px 18px; color: #6c757d;">Upload to Assets, use asset_url</td></tr>
+              <tr style="background: #fafafa; border-bottom: 1px solid #f0f0f0;"><td style="padding: 12px 18px; font-weight: 600;">🔵 WordPress</td><td style="padding: 12px 18px;">Child theme enqueue</td><td style="padding: 12px 18px;"><code style="font-size:12px;background:#f5f5f5;padding:2px 5px;border-radius:4px;">DOMContentLoaded</code></td><td style="padding: 12px 18px; color: #e67e22;">⚠️ Filter required</td><td style="padding: 12px 18px; color: #6c757d;">script_loader_tag filter adds type="module"</td></tr>
+              <tr style="background: white; border-bottom: 1px solid #f0f0f0;"><td style="padding: 12px 18px; font-weight: 600;">🧱 Bricks</td><td style="padding: 12px 18px;">Child theme enqueue</td><td style="padding: 12px 18px;"><code style="font-size:12px;background:#f5f5f5;padding:2px 5px;border-radius:4px;">bricksReady</code></td><td style="padding: 12px 18px; color: #e67e22;">⚠️ Filter required</td><td style="padding: 12px 18px; color: #6c757d;">Must wait for bricksReady event</td></tr>
+              <tr style="background: #fafafa;"><td style="padding: 12px 18px; font-weight: 600;">🌊 Webflow</td><td style="padding: 12px 18px;">CDN / hosted URL</td><td style="padding: 12px 18px;"><code style="font-size:12px;background:#f5f5f5;padding:2px 5px;border-radius:4px;">window.Webflow.push</code></td><td style="padding: 12px 18px; color: #27ae60;">✅ Native</td><td style="padding: 12px 18px; color: #6c757d;">Use Webflow.push to defer after IX2</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="scroll-indicator" id="scroll-indicator">Scroll: 0px | Library: None</div>
+
+    <script type="module" src="demo.js"></script>
+  </body>
+</html>

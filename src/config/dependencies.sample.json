@@ -1,0 +1,38 @@
+{
+  "core": ["lenis", "gsap"],
+  "gsap_plugins": [
+    "CustomBounce",
+    "CustomEase",
+    "CustomWiggle",
+    "Draggable",
+    "DrawSVGPlugin",
+    "EaselPlugin",
+    "EasePack",
+    "Flip",
+    "GSDevTools",
+    "InertiaPlugin",
+    "MorphSVGPlugin",
+    "MotionPathHelper",
+    "MotionPathPlugin",
+    "Observer",
+    "Physics2DPlugin",
+    "PhysicsPropsPlugin",
+    "PixiPlugin",
+    "ScrambleTextPlugin",
+    "ScrollSmoother",
+    "ScrollToPlugin",
+    "ScrollTrigger",
+    "SplitText",
+    "TextPlugin"
+  ],
+  "instantiate": ["lenis"],
+  "preferredScroller": "lenis",
+  "lenisConfig": {
+    "duration": 1.2,
+    "easing": "easeOutExpo",
+    "smoothWheel": true,
+    "smoothTouch": false,
+    "normalizeWheel": true
+  },
+  "dependencyGraph": {}
+}

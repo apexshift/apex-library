@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apex CubicBezier — Live Demo</title>
+    <link rel="stylesheet" href="demo.css" />
+  </head>
+  <body>
+    <a href="../" class="back-link">← All Examples</a>
+    <div class="container">
+      <h1>Apex CubicBezier Demo</h1>
+
+      <div class="demo">
+        <h2>Interactive Bezier Curve</h2>
+        <p>Drag the control points to modify the curve. Watch the animation below update in real-time.</p>
+
+        <div class="controls">
+          <div class="control-group">
+            <label>P1 X: <span id="p1x-value">0.25</span></label>
+            <input type="range" id="p1x" min="0" max="1" step="0.01" value="0.25" />
+          </div>
+          <div class="control-group">
+            <label>P1 Y: <span id="p1y-value">0.10</span></label>
+            <input type="range" id="p1y" min="0" max="1" step="0.01" value="0.10" />
+          </div>
+          <div class="control-group">
+            <label>P2 X: <span id="p2x-value">0.25</span></label>
+            <input type="range" id="p2x" min="0" max="1" step="0.01" value="0.25" />
+          </div>
+          <div class="control-group">
+            <label>P2 Y: <span id="p2y-value">1.00</span></label>
+            <input type="range" id="p2y" min="0" max="1" step="0.01" value="1.00" />
+          </div>
+        </div>
+
+        <div class="preset-buttons">
+          <button class="preset active" data-preset="ease">Ease</button>
+          <button class="preset" data-preset="ease-in">Ease In</button>
+          <button class="preset" data-preset="ease-out">Ease Out</button>
+          <button class="preset" data-preset="ease-in-out">Ease In Out</button>
+          <button class="preset" data-preset="linear">Linear</button>
+          <button class="preset" data-preset="bounce">Bounce</button>
+        </div>
+
+        <div class="canvas-container">
+          <canvas id="bezier-canvas" width="800" height="400"></canvas>
+        </div>
+
+        <div class="info">
+          <div>Current: cubic-bezier(<span id="current-values">0.25, 0.1, 0.25, 1</span>)</div>
+          <div>Sample at t=0.5: <span id="sample-value">0.311</span></div>
+        </div>
+      </div>
+
+      <div class="demo">
+        <h2>Animation Demo</h2>
+        <p>The box below animates using the current Bezier curve.</p>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="animation-demo">
+          <div class="animated-box" id="animated-box"></div>
+        </div>
+
+        <button id="play-animation">Play Animation</button>
+        <button id="reset-animation">Reset</button>
+      </div>
+    </div>
+
+    <script type="module" src="demo.js"></script>
+  </body>
+</html>
