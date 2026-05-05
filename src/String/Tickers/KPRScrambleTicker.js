@@ -1,4 +1,4 @@
-import { KPRScramble } from '../Effects.js';
+import { KPRScramble } from '../Effects/KPRScramble.js';
 
 class KPRScrambleTicker extends KPRScramble {
   constructor() {

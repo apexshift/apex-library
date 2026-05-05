@@ -1,4 +1,4 @@
-import { WriterScramble } from '../Effects.js';
+import { WriterScramble } from '../Effects/WriterScramble.js';
 
 class WriterScrambleTicker extends WriterScramble {
   constructor() {

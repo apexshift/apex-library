@@ -1,4 +1,4 @@
-import { YugopScramble } from '../Effects.js';
+import { YugopScramble } from '../Effects/YugopScramble.js';
 
 class YugopScrambleTicker extends YugopScramble {
   constructor() {
