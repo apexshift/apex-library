@@ -7,7 +7,7 @@ This project uses [Changesets](https://github.com/changesets/changesets) for ver
 
 ---
 
-## [0.0.1] — Unreleased
+## [0.1.1] — Unreleased
 
 Initial pre-release. API is stable but not yet published to the npm registry.
 

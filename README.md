@@ -2,7 +2,7 @@
 
 **A modular, tree-shakable vanilla JavaScript library for animation utilities, text effects, easing, and smart dependency management.**
 
-![Version](https://img.shields.io/badge/version-0.0.1-blue)
+![Version](https://img.shields.io/badge/version-0.1.1-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Tests](https://img.shields.io/badge/tests-149%20passing-brightgreen)
 ![Build](https://github.com/apexshift/apex-library/actions/workflows/ci.yml/badge.svg)
@@ -242,18 +242,18 @@ Please run `pnpm lint` and `pnpm test:ci` before submitting a pull request. Comm
 
 ## Project Status
 
-| Area                        | Status                                     |
-| --------------------------- | ------------------------------------------ |
-| String Effects (3 engines)  | Stable                                     |
-| Maths / Ease (40+ functions) | Stable                                    |
-| Maths / CubicBezier          | Stable                                    |
-| EventEmitter                | Stable                                     |
-| DependencyManager           | Stable                                     |
-| TypeScript declarations     | Stable — `.d.ts` emitted on every build    |
-| npm publish / versioning    | Configured (Changesets), not yet published |
-| Test coverage               | 149 tests passing across all modules       |
+| Area                         | Status                                     |
+| ---------------------------- | ------------------------------------------ |
+| String Effects (3 engines)   | Stable                                     |
+| Maths / Ease (40+ functions) | Stable                                     |
+| Maths / CubicBezier          | Stable                                     |
+| EventEmitter                 | Stable                                     |
+| DependencyManager            | Stable                                     |
+| TypeScript declarations      | Stable — `.d.ts` emitted on every build    |
+| npm publish / versioning     | Configured (Changesets), not yet published |
+| Test coverage                | 149 tests passing across all modules       |
 
-**Current version:** `0.0.1` — pre-release. API is stable but not yet published to the npm registry.
+**Current version:** `0.1.1` — pre-release. API is stable but not yet published to the npm registry.
 
 ---
 
