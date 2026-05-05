@@ -119,32 +119,6 @@ class KPRScramble extends ScrambleEngine {
   }
 
   /**
-   * Direction-aware reveal logic.
-   * @param {number} index - The character index.
-   * @param {number} progress - The current reveal progress.
-   * @returns {boolean} True if the position should be revealed.
-   * @private
-   */
-  _isPositionRevealed(index, progress) {
-    switch (this.direction) {
-      case 'center': {
-        const mid = Math.floor(this.transitionLength / 2);
-        const distFromCenter = Math.abs(index - mid);
-        return distFromCenter <= progress;
-      }
-
-      case 'rtl': {
-        return this.transitionLength - index - 1 < progress;
-      }
-
-      case 'ltr':
-      default: {
-        return index < progress;
-      }
-    }
-  }
-
-  /**
    * Completes the animation and sets final text.
    */
   completeAnimation() {

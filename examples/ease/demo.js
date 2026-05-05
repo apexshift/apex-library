@@ -1,4 +1,4 @@
-import { Ease } from '../../dist/Math/Ease.js';
+import { Ease } from '../../dist/Maths/Ease.js';
 
 class EaseDemo {
   constructor() {

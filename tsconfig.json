@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "checkJs": false,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": false,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*.js"],
+  "exclude": ["src/**/*.test.js", "node_modules", "dist", "examples"]
+}

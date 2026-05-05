@@ -1,4 +1,4 @@
-import { CubicBezier } from '../../dist/Math/CubicBezier.js';
+import { CubicBezier } from '../../dist/Maths/CubicBezier.js';
 
 class BezierDemo {
   constructor() {

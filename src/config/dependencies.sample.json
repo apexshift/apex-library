@@ -34,5 +34,10 @@
     "smoothTouch": false,
     "normalizeWheel": true
   },
-  "dependencyGraph": {}
+  "dependencyGraph": {
+    "CustomBounce": ["CustomEase"],
+    "CustomWiggle": ["CustomEase"],
+    "MotionPathHelper": ["MotionPathPlugin"],
+    "ScrollSmoother": ["ScrollTrigger"]
+  }
 }

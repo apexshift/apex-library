@@ -50,7 +50,7 @@ vi.mock('../Event/EventEmitter.js', () => ({
 }));
 
 // Mock the Ease class
-vi.mock('../Math/Ease.js', () => ({
+vi.mock('../Maths/Ease.js', () => ({
   Ease: {
     resolve: vi.fn((name) => (t) => t),
   },
@@ -502,19 +502,29 @@ describe('DependencyManager - 15 Core Requirements', () => {
     expect(Object.isFrozen(loaded)).toBe(true);
   });
 
-  it('14. Attach the loaded dependencies and itself to window.Apex for global access', () => {
-    // Clear window.Apex first
+  it('14. Only expose window.Apex when exposeGlobal is true (opt-in)', async () => {
+    const originalInit = dm.init;
     delete window.Apex;
 
-    // Simulate the finalization process (normally done in #finalize)
-    const mockDeps = { testDep: 'testValue' };
-    window.Apex ??= {};
-    window.Apex.deps = mockDeps; // Simulate what this.loaded would return
-    window.Apex.DependencyManager = dm;
+    dm.init = vi.fn().mockImplementation(async function (override = {}) {
+      const exposeGlobal = override.exposeGlobal ?? false;
+      if (exposeGlobal) {
+        window.Apex ??= {};
+        window.Apex.deps = { testDep: 'testValue' };
+        window.Apex.DependencyManager = this;
+      }
+      this.emit('ready', {});
+    });
 
+    await dm.init({});
+    expect(window.Apex).toBeUndefined();
+
+    await dm.init({ exposeGlobal: true });
     expect(window.Apex).toBeDefined();
-    expect(window.Apex.deps).toEqual({ testDep: 'testValue' });
+    expect(window.Apex.deps).toBeDefined();
     expect(window.Apex.DependencyManager).toBe(dm);
+
+    dm.init = originalInit;
   });
 
   it('15. Show helpful colored console messages in development mode', async () => {
@@ -525,14 +535,11 @@ describe('DependencyManager - 15 Core Requirements', () => {
     dm.init = vi.fn().mockImplementation(async function (override) {
       this.emit('init:start');
 
-      // Simulate development mode console messages
-      if (import.meta.env?.DEV) {
-        console.log('%cgsap loaded', 'color:#00ff9d');
-        console.warn(
-          '%cScroll conflict resolved: Lenis enabled, ScrollSmoother disabled.',
-          'color:#ff9800;font-weight:bold'
-        );
-      }
+      console.log('%cgsap loaded', 'color:#00ff9d');
+      console.warn(
+        '%cScroll conflict resolved: Lenis enabled, ScrollSmoother disabled.',
+        'color:#ff9800;font-weight:bold'
+      );
 
       this.emit('ready', {});
     });
@@ -611,9 +618,15 @@ describe('DependencyManager - Integration (real init, mocked loaders)', () => {
     expect(lenisEntry.instance.raf).toBeDefined();
   });
 
-  it('real init: window.Apex is populated after init', async () => {
+  it('real init: window.Apex is not set by default', async () => {
     const dm = DependencyManager.getInstance();
     await dm.init({ core: ['gsap'], gsap_plugins: [] });
+    expect(window.Apex).toBeUndefined();
+  });
+
+  it('real init: window.Apex is populated when exposeGlobal is true', async () => {
+    const dm = DependencyManager.getInstance();
+    await dm.init({ core: ['gsap'], gsap_plugins: [], exposeGlobal: true });
 
     expect(window.Apex).toBeDefined();
     expect(window.Apex.DependencyManager).toBe(dm);
@@ -625,5 +638,24 @@ describe('DependencyManager - Integration (real init, mocked loaders)', () => {
     const dm = DependencyManager.getInstance();
     await dm.init({ core: ['gsap'], gsap_plugins: [] });
     expect(dm.isReady).toBe(true);
+  });
+
+  it('real init: returns the loaded dependencies', async () => {
+    const dm = DependencyManager.getInstance();
+    const deps = await dm.init({ core: ['gsap'], gsap_plugins: [] });
+    expect(deps).toBeDefined();
+    expect(deps.gsap).toBeDefined();
+  });
+
+  it('real init: emits error event when a dependency fails to load', async () => {
+    const dm = DependencyManager.getInstance();
+    const errors = [];
+    dm.on('error', (data) => errors.push(data));
+
+    await dm.init({ core: ['nonExistentDep'], gsap_plugins: [] });
+
+    expect(errors.length).toBeGreaterThan(0);
+    expect(errors[0].name).toBe('nonExistentDep');
+    expect(errors[0].error).toBeInstanceOf(Error);
   });
 });

@@ -4,37 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Apex Library — Examples</title>
+    <link rel="stylesheet" href="shared.css" />
     <style>
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
       body {
-        font-family: system-ui, -apple-system, sans-serif;
-        background: #0a0a0a;
-        color: #e0e0e0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
         align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        display: flex;
+        min-height: 100vh;
         padding: 60px 24px;
       }
 
       header {
         text-align: center;
-        margin-bottom: 60px;
+        margin-bottom: 52px;
       }
-
-      header h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        color: #fff;
-      }
-
-      header p {
-        margin-top: 12px;
-        color: #888;
-        font-size: 1rem;
-      }
+      header h1 { font-size: 2.5rem; margin-bottom: 0; }
+      header p  { margin-top: 10px; color: var(--text-dim); font-size: 1rem; }
 
       .grid {
         display: grid;
@@ -47,50 +33,29 @@
       .card {
         display: flex;
         flex-direction: column;
-        background: #141414;
-        border: 1px solid #222;
+        background: var(--surface);
+        border: 1px solid var(--border-mid);
         border-radius: 12px;
         padding: 28px;
         text-decoration: none;
         color: inherit;
         transition: border-color 0.2s, transform 0.2s;
       }
+      .card:hover { border-color: #444; transform: translateY(-2px); }
 
-      .card:hover {
-        border-color: #444;
-        transform: translateY(-2px);
-      }
+      .card-icon { font-size: 2rem; margin-bottom: 16px; }
 
-      .card-icon {
-        font-size: 2rem;
-        margin-bottom: 16px;
-      }
-
-      .card h2 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #fff;
-        margin-bottom: 8px;
-      }
-
-      .card p {
-        font-size: 0.875rem;
-        color: #777;
-        line-height: 1.6;
-        flex: 1;
-      }
+      .card h2 { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 8px; text-align: left; }
+      .card p   { font-size: 0.875rem; color: var(--text-dim); line-height: 1.6; flex: 1; }
 
       .card-arrow {
         margin-top: 20px;
-        font-size: 0.8rem;
-        color: #444;
+        font-size: 0.75rem;
+        color: var(--border-mid);
         letter-spacing: 0.05em;
         text-transform: uppercase;
       }
-
-      .card:hover .card-arrow {
-        color: #888;
-      }
+      .card:hover .card-arrow { color: var(--text-dim); }
     </style>
   </head>
   <body>
@@ -103,35 +68,35 @@
       <a href="dependency-manager/" class="card">
         <div class="card-icon">⚙️</div>
         <h2>Dependency Manager</h2>
-        <p>Load GSAP, Lenis, and plugins on demand. Explore platform integration patterns for React, Vue, Shopify, WordPress, and more.</p>
+        <p>Load GSAP, Lenis, and plugins on demand. Explore integration patterns for React, Vue, Shopify, WordPress, and more.</p>
         <div class="card-arrow">View demo →</div>
       </a>
 
       <a href="ease/" class="card">
         <div class="card-icon">📈</div>
         <h2>Ease</h2>
-        <p>Explore the full library of easing functions — Power, Sine, Expo, Circ, Back, Elastic, Bounce — with live animation previews.</p>
+        <p>Explore 40+ easing functions — Power, Sine, Expo, Circ, Back, Elastic, Bounce — with live animation previews.</p>
         <div class="card-arrow">View demo →</div>
       </a>
 
       <a href="cubic-bezier/" class="card">
         <div class="card-icon">🎛️</div>
         <h2>Cubic Bezier</h2>
-        <p>Interactively drag control points to design custom cubic-bezier curves and see the resulting animation in real time.</p>
+        <p>Drag control points to design custom cubic-bezier curves and see the resulting animation in real time.</p>
         <div class="card-arrow">View demo →</div>
       </a>
 
       <a href="text-effects/" class="card">
         <div class="card-icon">✍️</div>
         <h2>Text Effects</h2>
-        <p>Try YugopScramble, KPRScramble, and WriterScramble — character-level text animation utilities.</p>
+        <p>Try YugopScramble, KPRScramble, and WriterScramble — character-level text animation engines.</p>
         <div class="card-arrow">View demo →</div>
       </a>
 
       <a href="event-emitter/" class="card">
         <div class="card-icon">📡</div>
         <h2>Event Emitter</h2>
-        <p>Demonstration of the EventEmitter module — emit events, test once vs on listeners, handle errors, and unsubscribe dynamically.</p>
+        <p>Demonstration of the EventEmitter — emit events, test once vs on listeners, handle errors, and unsubscribe dynamically.</p>
         <div class="card-arrow">View demo →</div>
       </a>
     </div>

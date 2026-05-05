@@ -1,6 +1,26 @@
 import siteConfig from '../config/dependencies.json' with { type: 'json' };
 import { EventEmitter } from '../Event/EventEmitter.js';
-import { Ease } from '../Math/Ease.js';
+import { Ease } from '../Maths/Ease.js';
+
+/**
+ * @typedef {Object} LenisConfig
+ * @property {number} [duration=1.2] - Scroll duration in seconds.
+ * @property {string|EasingFunction} [easing='outExpo'] - Easing name or function.
+ * @property {boolean} [smoothWheel=true]
+ * @property {boolean} [smoothTouch=false]
+ * @property {boolean} [normalizeWheel=true]
+ */
+
+/**
+ * @typedef {Object} DependencyManagerConfig
+ * @property {string[]} [core] - Core libraries to load (e.g. ['gsap', 'lenis']).
+ * @property {string[]} [gsap_plugins] - GSAP plugin names to load and register.
+ * @property {string[]} [instantiate] - Names of dependencies to instantiate after loading.
+ * @property {'lenis'|'ScrollSmoother'} [preferredScroller='lenis'] - Which scroller wins on conflict.
+ * @property {boolean} [exposeGlobal=false] - When true, attaches loaded deps to window.Apex.
+ * @property {LenisConfig} [lenisConfig] - Options passed to the Lenis constructor.
+ * @property {Object.<string, string[]>} [dependencyGraph] - Additional plugin dependency edges.
+ */
 
 /** Core dependency loaders */
 const coreDependencies = {
@@ -50,7 +70,17 @@ const GSAP_DEPENDENCY_GRAPH = {
 };
 
 /**
- * Dependency Manager - Handles lazy loading of GSAP, Lenis, plugins, etc.
+ * Singleton lazy-loader for GSAP, Lenis, and GSAP plugins.
+ *
+ * Handles two-phase loading (core → plugins), automatic plugin registration,
+ * Lenis/ScrollSmoother conflict resolution, and Lenis–GSAP ticker sync.
+ * Emits lifecycle events at each stage so consumers can react without polling.
+ *
+ * @extends EventEmitter
+ *
+ * @example
+ * const dm = DependencyManager.getInstance();
+ * const { gsap, lenis } = await dm.init({ core: ['gsap', 'lenis'] });
  */
 class DependencyManager extends EventEmitter {
   static #instance = null;
@@ -65,7 +95,10 @@ class DependencyManager extends EventEmitter {
     }
   }
 
-  /* Singleton */
+  /**
+   * Returns the singleton instance, creating it on first call.
+   * @returns {DependencyManager}
+   */
   static getInstance() {
     if (!this.#instance) {
       this.#instance = new DependencyManager();
@@ -73,14 +106,33 @@ class DependencyManager extends EventEmitter {
     return this.#instance;
   }
 
+  /**
+   * Whether all dependencies have finished loading and registering.
+   * @returns {boolean}
+   */
   get isReady() {
     return this.#ready;
   }
 
+  /**
+   * A frozen snapshot of all currently loaded dependency instances,
+   * keyed by name (e.g. `{ gsap, lenis, ScrollTrigger }`).
+   * @returns {Readonly<Object.<string, any>>}
+   */
   get loaded() {
     return Object.freeze({ ...this.#deps });
   }
 
+  /**
+   * Loads all requested dependencies, registers GSAP plugins, resolves
+   * scroll conflicts, syncs Lenis, and returns the loaded instances.
+   *
+   * Emits: `init:start`, `dep:loaded`, `plugin:registered`,
+   * `scroll-conflict-resolved`, `smart-lenis-synced`, `ready`, `error`.
+   *
+   * @param {DependencyManagerConfig} [override={}] - Runtime config overrides.
+   * @returns {Promise<Readonly<Object.<string, any>>>} Frozen map of loaded instances.
+   */
   async init(override = {}) {
     this.emit('init:start');
 
@@ -89,7 +141,7 @@ class DependencyManager extends EventEmitter {
     this.#resolveScrollConflict(override);
     this.#syncLenisWithGsap();
 
-    this.#finalize();
+    return this.#finalize(override);
   }
 
   // 1. Load all requested dependencies
@@ -107,6 +159,11 @@ class DependencyManager extends EventEmitter {
     // at module-evaluation time and will throw if gsap isn't on window yet.
     const coreNames = loadOrder.filter((n) => coreDependencies[n]);
     const pluginNames = loadOrder.filter((n) => gsapPlugins[n]);
+    const unknownNames = loadOrder.filter((n) => !loaders[n]);
+
+    unknownNames.forEach((name) => {
+      this.emit('error', { name, error: new Error(`No loader found for "${name}"`) });
+    });
 
     await Promise.all(coreNames.map((name) => this.#loadOne(name, override)));
 
@@ -294,13 +351,18 @@ class DependencyManager extends EventEmitter {
   }
 
   // 6. Finalize
-  #finalize() {
-    window.Apex ??= {};
-    window.Apex.deps = this.loaded;
-    window.Apex.DependencyManager = this;
+  #finalize(override = {}) {
+    const exposeGlobal = override.exposeGlobal ?? siteConfig.exposeGlobal ?? false;
+
+    if (exposeGlobal) {
+      window.Apex ??= {};
+      window.Apex.deps = this.loaded;
+      window.Apex.DependencyManager = this;
+    }
 
     this.#ready = true;
     this.emit('ready', this.loaded);
+    return this.loaded;
   }
 }
 

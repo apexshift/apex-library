@@ -1,10 +1,17 @@
 /**
+ * @typedef {function(number): number} EasingFunction
+ */
+
+/**
  * @typedef {Object} ScrambleConfig
- * @property {number} [fps=60]
- * @property {string} [padChar=' ']
- * @property {number} [transitionDuration=300]
- * @property {Function} [callback]
- * @property {number} [maxFrames=300]
+ * @property {number} [fps=60] - Target frames per second.
+ * @property {string} [padChar=' '] - Character used to pad shorter strings.
+ * @property {number} [transitionDuration=300] - Fade transition duration in ms.
+ * @property {number} [maxFrames=1000] - Safety limit to prevent infinite loops.
+ * @property {function(): void} [onStart] - Called when the animation begins.
+ * @property {function(string, number): void} [onFrame] - Called each frame with the current display text and frame count.
+ * @property {function({duration: number}): void} [onComplete] - Called when the animation ends.
+ * @property {function({duration: number}): void} [callback] - Legacy completion callback. Prefer onComplete.
  */
 
 /**
@@ -89,7 +96,10 @@ class ScrambleEngine {
     this.defaults = {
       fps: 60, // Frames per second
       maxFrames: 1000, // Maximum frames to prevent infinite loops
-      callback: null, // Optional callback on completion
+      callback: null, // Legacy completion callback — prefer onComplete
+      onStart: null, // Called when animation begins
+      onFrame: null, // Called each frame with (displayText, frameCount)
+      onComplete: null, // Called when animation ends with ({ duration })
       characterSet: ScrambleEngine.getCombinedSet(), // Default to alphanumeric
       padChar: ' ', // Padding character for length interpolation
     };
@@ -241,6 +251,8 @@ class ScrambleEngine {
       })
     );
 
+    if (this.config.onStart) this.config.onStart();
+
     // Start animation loop
     this.requestId = requestAnimationFrame(this.animationLoop);
   }
@@ -260,6 +272,8 @@ class ScrambleEngine {
       this.frameCount++;
       this.frameIntervals.push(delta);
       this.animate();
+
+      if (this.config.onFrame) this.config.onFrame(this.element.textContent, this.frameCount);
 
       if (this.frameCount > this.config.maxFrames) {
         this.completeAnimation();
@@ -347,7 +361,29 @@ class ScrambleEngine {
       })
     );
 
+    if (this.config.onComplete) this.config.onComplete({ duration });
     if (this.config.callback) this.config.callback({ duration });
+  }
+
+  /**
+   * Direction-aware reveal check for position-based scramble effects.
+   * Subclasses must set `this.direction` and `this.transitionLength` before calling.
+   * @param {number} index - Character index.
+   * @param {number} progress - Current reveal progress.
+   * @returns {boolean}
+   */
+  _isPositionRevealed(index, progress) {
+    switch (this.direction) {
+      case 'center': {
+        const mid = Math.floor(this.transitionLength / 2);
+        return Math.abs(index - mid) <= progress;
+      }
+      case 'rtl':
+        return this.transitionLength - index - 1 < progress;
+      case 'ltr':
+      default:
+        return index < progress;
+    }
   }
 
   /**
@@ -362,9 +398,8 @@ class ScrambleEngine {
       })
     );
 
-    if (this.config.callback) {
-      this.config.callback({ duration });
-    }
+    if (this.config.onComplete) this.config.onComplete({ duration });
+    if (this.config.callback) this.config.callback({ duration });
   }
 }
 

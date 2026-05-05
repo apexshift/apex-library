@@ -4,7 +4,7 @@
 
 ![Version](https://img.shields.io/badge/version-0.0.1-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Tests](https://img.shields.io/badge/tests-142%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-149%20passing-brightgreen)
 ![Build](https://github.com/apexshift/apex-library/actions/workflows/ci.yml/badge.svg)
 
 ---
@@ -18,7 +18,7 @@ The library covers four areas:
 | Namespace        | What it does                                            |
 | ---------------- | ------------------------------------------------------- |
 | `String/Effects` | Character-level text scramble and typewriter animations |
-| `Math`           | Easing functions and cubic bezier curve sampling        |
+| `Maths`          | Easing functions and cubic bezier curve sampling        |
 | `Event`          | Lightweight pub/sub event emitter                       |
 | `Core`           | Smart lazy-loader for GSAP, Lenis, and all GSAP plugins |
 
@@ -61,7 +61,8 @@ Everything is ESM-first, side-effect free (`"sideEffects": false`), and built wi
 - Resolves Lenis / ScrollSmoother scroll conflicts automatically
 - Syncs Lenis with GSAP ticker and ScrollTrigger out of the box
 - Fully event-driven (`init:start`, `dep:loaded`, `plugin:registered`, `ready`, `error`)
-- Exposes all loaded instances at `window.Apex.deps`
+- Returns loaded instances directly from `init()` — no globals required
+- Optionally exposes deps at `window.Apex` via `exposeGlobal: true`
 - Config driven via `src/config/dependencies.json`, overridable per-call
 
 ---
@@ -118,7 +119,7 @@ effect.init();
 ### Easing
 
 ```js
-import { Ease } from 'apex/Math/Ease.js';
+import { Ease } from 'apex/Maths/Ease.js';
 
 const fn = Ease.resolve('outExpo');
 console.log(fn(0.5)); // ~0.969
@@ -130,7 +131,7 @@ const customFn = Ease.resolve('cubic-bezier(0.25, 0.1, 0.25, 1)');
 ### CubicBezier
 
 ```js
-import { CubicBezier } from 'apex/Math/CubicBezier.js';
+import { CubicBezier } from 'apex/Maths/CubicBezier.js';
 
 const curve = new CubicBezier(0.25, 0.1, 0.25, 1.0);
 console.log(curve.sample(0.5)); // value at t=0.5
@@ -155,14 +156,9 @@ import { DependencyManager } from 'apex/Core/DependencyManager.js';
 
 const dm = DependencyManager.getInstance();
 
-dm.on('ready', (deps) => {
-  const { gsap, lenis, ScrollTrigger } = window.Apex.deps;
-  // everything loaded, registered, and synced
-});
-
 dm.on('error', ({ name, error }) => console.error(`Failed to load ${name}`, error));
 
-await dm.init({
+const { gsap, lenis, ScrollTrigger } = await dm.init({
   core: ['gsap', 'lenis'],
   gsap_plugins: ['ScrollTrigger', 'Flip'],
   instantiate: ['lenis'],
@@ -186,9 +182,9 @@ await dm.init({
 | `KPRScramble`    | High-energy full-text shuffle that progressively locks characters         |
 | `WriterScramble` | Per-character typewriter with configurable shuffle count and cursor       |
 
-All effects dispatch `start` and `complete` DOM custom events and accept an `onComplete` callback.
+All effects dispatch `ScrambleEngine:start` and `ScrambleEngine:complete` DOM custom events and support `onStart`, `onFrame`, and `onComplete` config hooks.
 
-### `Math`
+### `Maths`
 
 | Class         | Description                                                                              |
 | ------------- | ---------------------------------------------------------------------------------------- |
@@ -214,15 +210,33 @@ Supported GSAP plugins: `CustomBounce`, `CustomEase`, `CustomWiggle`, `Draggable
 ## Development
 
 ```bash
-pnpm install       # install dependencies
-pnpm build         # compile to dist/
-pnpm dev           # watch mode
-pnpm test          # run test suite (Vitest)
-pnpm lint          # ESLint
-pnpm format        # Prettier
+pnpm install          # install dependencies
+pnpm build            # compile to dist/ and emit type declarations
+pnpm dev              # watch mode
+pnpm test             # run test suite (Vitest)
+pnpm test:coverage    # run tests with coverage report
+pnpm lint             # ESLint
+pnpm format           # Prettier
 ```
 
-Live demos for each module are in [`examples/`](./examples/) — open `examples/index.html` in a browser.
+Live demos for each module are in [`examples/`](./examples/). Run `pnpm build` first — the example files import directly from `dist/`.
+
+---
+
+## Contributing
+
+```bash
+git clone <repo>
+cd apexlibrary.local
+pnpm install     # install all dependencies
+pnpm dev         # start watch mode build
+pnpm test        # run the full test suite
+pnpm build       # production build + type declarations
+```
+
+Then open `examples/index.html` in a browser to explore the live demos.
+
+Please run `pnpm lint` and `pnpm test:ci` before submitting a pull request. Commit messages follow the [Conventional Commits](https://www.conventionalcommits.org/) spec — enforced by commitlint.
 
 ---
 
@@ -231,13 +245,13 @@ Live demos for each module are in [`examples/`](./examples/) — open `examples/
 | Area                        | Status                                     |
 | --------------------------- | ------------------------------------------ |
 | String Effects (3 engines)  | Stable                                     |
-| Math / Ease (40+ functions) | Stable                                     |
-| Math / CubicBezier          | Stable                                     |
+| Maths / Ease (40+ functions) | Stable                                    |
+| Maths / CubicBezier          | Stable                                    |
 | EventEmitter                | Stable                                     |
 | DependencyManager           | Stable                                     |
-| TypeScript types            | Planned (v2)                               |
+| TypeScript declarations     | Stable — `.d.ts` emitted on every build    |
 | npm publish / versioning    | Configured (Changesets), not yet published |
-| Test coverage               | 142 tests passing across all modules       |
+| Test coverage               | 149 tests passing across all modules       |
 
 **Current version:** `0.0.1` — pre-release. API is stable but not yet published to the npm registry.
 

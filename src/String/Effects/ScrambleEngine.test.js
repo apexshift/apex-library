@@ -5,6 +5,12 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import ScrambleEngine from './ScrambleEngine.js';
 
+class ConcreteEngine extends ScrambleEngine {
+  animate() {
+    this.element.textContent = this.targetText;
+  }
+}
+
 describe('ScrambleEngine', () => {
   let element;
   let engine;
@@ -202,6 +208,67 @@ describe('ScrambleEngine', () => {
       engine.isRunning = true;
       engine.init();
       expect(startSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Lifecycle hooks', () => {
+    let element;
+
+    beforeEach(() => {
+      element = document.createElement('div');
+      element.textContent = 'hello';
+      element.innerText = 'hello';
+      document.body.appendChild(element);
+    });
+
+    afterEach(() => {
+      document.body.removeChild(element);
+    });
+
+    it('calls onStart when animation begins', () => {
+      const onStart = vi.fn();
+      const engine = new ConcreteEngine(element, { onStart });
+      engine.init();
+      expect(onStart).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls onFrame with displayText and frameCount after each frame', () => {
+      const onFrame = vi.fn();
+      const engine = new ConcreteEngine(element, { onFrame });
+
+      engine.isRunning = true;
+      engine.startTime = performance.now();
+      engine.lastFrameTime = 0;
+      engine.frameCount = 0;
+      engine.frameIntervals = [];
+
+      engine.animationLoop(engine._frameInterval + 1);
+
+      expect(onFrame).toHaveBeenCalledTimes(1);
+      const [displayText, frameCount] = onFrame.mock.calls[0];
+      expect(typeof displayText).toBe('string');
+      expect(frameCount).toBe(1);
+    });
+
+    it('calls onComplete when animation finishes', () => {
+      const onComplete = vi.fn();
+      const engine = new ConcreteEngine(element, { onComplete });
+      engine.isRunning = true;
+      engine.startTime = performance.now();
+      engine.completeAnimation();
+      expect(onComplete).toHaveBeenCalledTimes(1);
+      expect(onComplete.mock.calls[0][0]).toHaveProperty('duration');
+    });
+
+    it('calls both onComplete and legacy callback on completion', () => {
+      const onComplete = vi.fn();
+      const callback = vi.fn();
+      const engine = new ConcreteEngine(element, { onComplete, callback });
+      engine.isRunning = true;
+      engine.startTime = performance.now();
+      engine.completeAnimation();
+      expect(onComplete).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(1);
     });
   });
 });
