@@ -240,3 +240,5 @@ export default class ContainerObserver {
     label.textContent = `${width}px | ~${remApprox}rem`;
   }
 }
+
+export { ContainerObserver };
