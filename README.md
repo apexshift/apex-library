@@ -4,7 +4,7 @@
 
 ![Version](https://img.shields.io/badge/version-0.2.1-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Tests](https://img.shields.io/badge/tests-149%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-280%20passing-brightgreen)
 ![Build](https://github.com/apexshift/apex-library/actions/workflows/ci.yml/badge.svg)
 
 ---
@@ -33,14 +33,18 @@ Everything is ESM-first, side-effect free (`"sideEffects": false`), and built wi
 
 **Text Effects**
 
-- Three distinct scramble engines: directional reveal, high-energy shuffle, and typewriter
+- Four distinct scramble engines: directional reveal, high-energy shuffle, typewriter, and terminal-style line reveal
+- `HackyScramble` — left-to-right multi-line character reveal with a trailing glitch frontier; multi-line aware, GSAP-free
+- CLS-safe structured mode for `HackyScramble`: pass a wrapper with `.hacky-spacer` + `.hacky-animation` children; layout height is held by the invisible spacer while only the overlay is animated
 - Shared `ScrambleEngine` base — consistent API across all effects
 - `requestAnimationFrame`-driven rendering with minimal DOM writes
 - Accessible `aria-live` output
 
 **Tickers**
 
-- Auto-cycling variants of each scramble effect: `KPRScrambleTicker`, `WriterScrambleTicker`, `YugopScrambleTicker`
+- Auto-cycling variants of every scramble effect: `KPRScrambleTicker`, `WriterScrambleTicker`, `YugopScrambleTicker`, `HackyScrambleTicker`
+- `HackyScrambleTicker` supports multi-line strings; structured mode is fully compatible — `Ticker:*` events bubble from the animation child to the wrapper
+- Organic length transitions for `KPRScramble` and `YugopScramble` tickers: strings of different lengths grow and shrink naturally during the scramble
 - Cycles through a `strings` array, scrambling into each value after a configurable `dwell` time
 - Full playback controls: `init()`, `pause()`, `resume()`, `stop()`, `destroy()`
 - `stopBehaviour: 'end' | 'hold' | 'reset'` controls where the ticker lands when stopped
@@ -155,6 +159,60 @@ const effect = new WriterScramble(document.getElementById('subtitle'), {
 effect.init();
 ```
 
+```js
+import { HackyScramble } from 'apex/String/Effects/HackyScramble.js';
+
+// Simple mode — animate the element directly
+const effect = new HackyScramble(document.getElementById('terminal'), {
+  charInterval: 40, // ms per character (controls speed)
+  glitchWidth: 3, // random chars trailing the write cursor
+});
+effect.init();
+
+// CLS-safe structured mode — wrap in a spacer + animation pair so
+// the element's height never collapses during animation
+// HTML: <div id="wrap">
+//         <div class="hacky-spacer">CONTENT\nLINE 2</div>
+//         <div class="hacky-animation"></div>
+//       </div>
+const clsSafe = new HackyScramble(document.getElementById('wrap'));
+clsSafe.init();
+```
+
+### HackyScrambleTicker
+
+```js
+import { HackyScrambleTicker } from 'apex/String/Tickers/HackyScrambleTicker.js';
+
+// Structured mode recommended for multi-line strings
+// HTML: <div id="term">
+//         <div class="hacky-spacer">BOOT — v0.2.1\nSTATUS: ONLINE\nREADY_</div>
+//         <div class="hacky-animation"></div>
+//       </div>
+const ticker = new HackyScrambleTicker(document.getElementById('term'), {
+  strings: [
+    'BOOT — v0.2.1\nSTATUS: ONLINE\nREADY_',
+    'SCANNING...\nFOUND: 4 DEVICES\nLINK: ACTIVE_',
+    'AUTH: ACCEPTED\nUSER: root@apex\nACCESS GRANTED_',
+  ],
+  dwell: 2000,
+  loop: true,
+  charInterval: 35,
+  glitchWidth: 3,
+});
+
+ticker.init();
+ticker.pause();
+ticker.resume();
+ticker.stop(); // honours stopBehaviour option
+ticker.destroy();
+
+// Events bubble from the animation child to the wrapper
+document.getElementById('term').addEventListener('Ticker:cycle', (e) => {
+  console.log(`Now showing line 1: ${e.detail.value.split('\n')[0]}`);
+});
+```
+
 ### Easing
 
 ```js
@@ -220,13 +278,27 @@ const { gsap, lenis, ScrollTrigger } = await dm.init({
 | `YugopScramble`  | Directional reveal (`ltr`, `rtl`, `center`) with character drift          |
 | `KPRScramble`    | High-energy full-text shuffle that progressively locks characters         |
 | `WriterScramble` | Per-character typewriter with configurable shuffle count and cursor       |
+| `HackyScramble`  | Terminal-style left-to-right multi-line reveal with a glitch frontier     |
 
 All effects dispatch `ScrambleEngine:start` and `ScrambleEngine:complete` DOM custom events and support `onStart`, `onFrame`, and `onComplete` config hooks.
+
+**`HackyScramble` options:**
+
+| Option              | Type             | Default                | Description                                    |
+| ------------------- | ---------------- | ---------------------- | ---------------------------------------------- |
+| `charInterval`      | `number`         | `40`                   | Milliseconds per character reveal              |
+| `glitchWidth`       | `number`         | `3`                    | Random characters appended at the write cursor |
+| `characterSet`      | `string\|Object` | alphanumeric + `-+_/\` | Character pool for glitch chars                |
+| `spacerSelector`    | `string`         | `'.hacky-spacer'`      | Child selector for the layout spacer           |
+| `animationSelector` | `string`         | `'.hacky-animation'`   | Child selector for the animated overlay        |
+
+Pass a **wrapper** element (containing matching spacer + animation children) to use **structured mode** — the spacer holds the layout height while only the overlay is mutated, preventing Cumulative Layout Shift.
 
 ### `String/Tickers`
 
 | Export                 | Description                                                         |
 | ---------------------- | ------------------------------------------------------------------- |
+| `HackyScrambleTicker`  | HackyScramble extended with auto-cycling and playback controls      |
 | `KPRScrambleTicker`    | KPRScramble extended with auto-cycling and playback controls        |
 | `WriterScrambleTicker` | WriterScramble extended with auto-cycling and playback controls     |
 | `YugopScrambleTicker`  | YugopScramble extended with auto-cycling and playback controls      |
@@ -316,8 +388,8 @@ Please run `pnpm lint` and `pnpm test:ci` before submitting a pull request. Comm
 
 | Area                             | Status                                     |
 | -------------------------------- | ------------------------------------------ |
-| String Effects (3 engines)       | Stable                                     |
-| String Tickers (3 engines)       | Stable                                     |
+| String Effects (4 engines)       | Stable                                     |
+| String Tickers (4 engines)       | Stable                                     |
 | Maths / Ease (40+ functions)     | Stable                                     |
 | Maths / CubicBezier              | Stable                                     |
 | EventEmitter                     | Stable                                     |

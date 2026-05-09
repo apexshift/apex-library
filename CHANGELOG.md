@@ -11,6 +11,29 @@ This project uses [Changesets](https://github.com/changesets/changesets) for ver
 
 ### Added
 
+- `String/Effects` — `HackyScramble`: terminal-style multi-line character-reveal effect
+  - Left-to-right, line-by-line reveal driven by a single `_at` counter; configurable `charInterval` (ms/char) controls speed
+  - `glitchWidth` random characters trail the write cursor on the active line for a hacking-terminal aesthetic
+  - Multi-line support via `\n` splitting; blank lines are treated as zero-length and skipped instantly
+  - **CLS-safe structured mode**: pass a wrapper element containing `.hacky-spacer` + `.hacky-animation` children; only the animation overlay is mutated — the spacer (with `visibility: hidden`) holds the layout height, preventing content shift
+  - `spacerSelector` / `animationSelector` options allow custom child selectors
+  - Falls back to simple (direct-element) mode when no matching children are found
+- `String/Effects` — `ScrambleEngine`: added `options.targetText` to allow pre-supplying target text when the animated element starts empty (used by structured mode; avoids empty-element warning)
+- `String/Tickers` — `HackyScrambleTicker`: auto-cycling terminal display built on `createTicker(HackyScramble)`
+  - Full ticker playback API inherited: `init()`, `pause()`, `resume()`, `stop()`, `destroy()`
+  - Works in both simple and structured mode; `Ticker:*` events bubble from the animation child to the wrapper in structured mode
+  - Each string in the `strings` array may be multi-line; spacer content sets the reserved layout height
+
+### Changed
+
+- `String/Tickers/index.js` — added `HackyScrambleTicker` export
+
+---
+
+## [0.2.1] — Unreleased
+
+### Added
+
 - `String/Tickers` — `KPRScrambleTicker`, `WriterScrambleTicker`, `YugopScrambleTicker`: auto-cycling variants of each scramble effect that transition through a `strings` array using the underlying scramble animation
 - `String/Tickers` — `createTicker(BaseEffect)` mixin factory for applying Ticker behaviour to any ScrambleEngine subclass
 - `String/Tickers` — full playback controls: `init()`, `pause()`, `resume()`, `stop()`, `destroy()`
@@ -23,6 +46,9 @@ This project uses [Changesets](https://github.com/changesets/changesets) for ver
 
 ### Changed
 
+- `String/Effects/KPRScramble` — organic length transitions: `_initialLen` is captured on `init()` and the visible text width lerps from the previous string's length to the new one over the course of the scramble, so shorter-to-longer and longer-to-shorter transitions grow and shrink naturally rather than jumping
+- `String/Effects/YugopScramble` — organic length transitions: `_initialLen`, `unpaddedLength`, and `_initialChars` captured on `init()`; unrevealed positions display the corresponding character from the previous string (instead of `waitChar`) until the wave front passes, and the visible width window interpolates between old and new lengths
+- `String/Tickers/ScrambleTicker` — `transitionDuration: 0` is now injected automatically into `effectOptions` unless the caller explicitly provides it, suppressing the opacity flash between cycles for KPR and Writer tickers
 - `Core/DependencyManager` — default config (`src/config/dependencies.json`) slimmed to GSAP + Lenis + ScrollTrigger; `dependencies.sample.json` now serves as the full 23-plugin reference
 - `package.json` exports map — added `./DX`, `./Performance`, `./String/Tickers`, and `./String/Tickers/*`
 
