@@ -2,7 +2,7 @@
 
 **A modular, tree-shakable vanilla JavaScript library for animation utilities, text effects, easing, and smart dependency management.**
 
-![Version](https://img.shields.io/badge/version-0.2.0-blue)
+![Version](https://img.shields.io/badge/version-0.2.1-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Tests](https://img.shields.io/badge/tests-149%20passing-brightgreen)
 ![Build](https://github.com/apexshift/apex-library/actions/workflows/ci.yml/badge.svg)
@@ -225,36 +225,36 @@ All effects dispatch `ScrambleEngine:start` and `ScrambleEngine:complete` DOM cu
 
 ### `String/Tickers`
 
-| Export                  | Description                                                         |
-| ----------------------- | ------------------------------------------------------------------- |
-| `KPRScrambleTicker`     | KPRScramble extended with auto-cycling and playback controls        |
-| `WriterScrambleTicker`  | WriterScramble extended with auto-cycling and playback controls     |
-| `YugopScrambleTicker`   | YugopScramble extended with auto-cycling and playback controls      |
-| `createTicker(Base)`    | Mixin factory — apply Ticker behaviour to any ScrambleEngine effect |
+| Export                 | Description                                                         |
+| ---------------------- | ------------------------------------------------------------------- |
+| `KPRScrambleTicker`    | KPRScramble extended with auto-cycling and playback controls        |
+| `WriterScrambleTicker` | WriterScramble extended with auto-cycling and playback controls     |
+| `YugopScrambleTicker`  | YugopScramble extended with auto-cycling and playback controls      |
+| `createTicker(Base)`   | Mixin factory — apply Ticker behaviour to any ScrambleEngine effect |
 
 **Constructor options** (in addition to the underlying effect's options):
 
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `strings` | `string[]` | required | Strings to cycle through |
-| `dwell` | `number` | `2000` | Ms between cycles (starts after scramble resolves) |
-| `loop` | `boolean` | `true` | Loop back to first string after last |
-| `stopBehaviour` | `'end'\|'hold'\|'reset'` | `'end'` | Where to land when `stop()` is called |
-| `initialContent` | `false\|'auto'\|string` | `false` | Starting content before first scramble |
+| Option           | Type                     | Default  | Description                                        |
+| ---------------- | ------------------------ | -------- | -------------------------------------------------- |
+| `strings`        | `string[]`               | required | Strings to cycle through                           |
+| `dwell`          | `number`                 | `2000`   | Ms between cycles (starts after scramble resolves) |
+| `loop`           | `boolean`                | `true`   | Loop back to first string after last               |
+| `stopBehaviour`  | `'end'\|'hold'\|'reset'` | `'end'`  | Where to land when `stop()` is called              |
+| `initialContent` | `false\|'auto'\|string`  | `false`  | Starting content before first scramble             |
 
 **Ticker events** (dispatched as DOM `CustomEvent` on the element):
 
-| Event | Fires when |
-|---|---|
-| `Ticker:start` | `init()` is called |
-| `Ticker:cycle` | A new scramble begins (`detail: { index, value }`) |
-| `Ticker:cycleComplete` | Scramble fully resolves |
-| `Ticker:dwellStart` | Dwell timer begins |
-| `Ticker:dwellComplete` | Dwell timer expires, next scramble about to fire |
-| `Ticker:pause` | Ticker suspends after current scramble |
-| `Ticker:resume` | `resume()` is called |
-| `Ticker:stop` | Stop sequence completes |
-| `Ticker:complete` | Full array exhausted (non-looping only) |
+| Event                  | Fires when                                         |
+| ---------------------- | -------------------------------------------------- |
+| `Ticker:start`         | `init()` is called                                 |
+| `Ticker:cycle`         | A new scramble begins (`detail: { index, value }`) |
+| `Ticker:cycleComplete` | Scramble fully resolves                            |
+| `Ticker:dwellStart`    | Dwell timer begins                                 |
+| `Ticker:dwellComplete` | Dwell timer expires, next scramble about to fire   |
+| `Ticker:pause`         | Ticker suspends after current scramble             |
+| `Ticker:resume`        | `resume()` is called                               |
+| `Ticker:stop`          | Stop sequence completes                            |
+| `Ticker:complete`      | Full array exhausted (non-looping only)            |
 
 ### `Maths`
 
@@ -314,21 +314,21 @@ Please run `pnpm lint` and `pnpm test:ci` before submitting a pull request. Comm
 
 ## Project Status
 
-| Area                         | Status                                     |
-| ---------------------------- | ------------------------------------------ |
-| String Effects (3 engines)   | Stable                                     |
-| String Tickers (3 engines)   | Stable                                     |
-| Maths / Ease (40+ functions) | Stable                                     |
-| Maths / CubicBezier          | Stable                                     |
-| EventEmitter                 | Stable                                     |
-| Performance (throttle, debounce) | Stable                                 |
-| DX / ContainerObserver       | Stable                                     |
-| DependencyManager            | Stable                                     |
-| TypeScript declarations      | Stable — `.d.ts` emitted on every build    |
-| npm publish / versioning     | Configured (Changesets), not yet published |
-| Test coverage                | Tests passing across all modules           |
+| Area                             | Status                                     |
+| -------------------------------- | ------------------------------------------ |
+| String Effects (3 engines)       | Stable                                     |
+| String Tickers (3 engines)       | Stable                                     |
+| Maths / Ease (40+ functions)     | Stable                                     |
+| Maths / CubicBezier              | Stable                                     |
+| EventEmitter                     | Stable                                     |
+| Performance (throttle, debounce) | Stable                                     |
+| DX / ContainerObserver           | Stable                                     |
+| DependencyManager                | Stable                                     |
+| TypeScript declarations          | Stable — `.d.ts` emitted on every build    |
+| npm publish / versioning         | Configured (Changesets), not yet published |
+| Test coverage                    | Tests passing across all modules           |
 
-**Current version:** `0.2.0` — pre-release. API is stable but not yet published to the npm registry.
+**Current version:** `0.2.1` — pre-release. API is stable but not yet published to the npm registry.
 
 ---
 

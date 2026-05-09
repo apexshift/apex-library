@@ -65,6 +65,16 @@ describe('WriterScrambleTicker', () => {
     );
   });
 
+  it('defaults transitionDuration to 0 to suppress opacity flash between cycles', () => {
+    ticker = new WriterScrambleTicker(element, { strings: STRINGS });
+    expect(ticker.config.transitionDuration).toBe(0);
+  });
+
+  it('honours explicit transitionDuration when provided', () => {
+    ticker = new WriterScrambleTicker(element, { strings: STRINGS, transitionDuration: 200 });
+    expect(ticker.config.transitionDuration).toBe(200);
+  });
+
   it('initialises with correct defaults', () => {
     ticker = new WriterScrambleTicker(element, { strings: STRINGS });
     expect(ticker._strings).toEqual(STRINGS);

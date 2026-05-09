@@ -34,6 +34,7 @@ class KPRScramble extends ScrambleEngine {
 
     // Animation state
     this.currentIterations = 0;
+    this._initialLen = 0;
     this.transitionLength = 0;
     this.unpaddedLength = 0;
     this.paddedTarget = '';
@@ -80,6 +81,7 @@ class KPRScramble extends ScrambleEngine {
       });
     }
 
+    this._initialLen = this.initialText.length;
     this.currentIterations = 0;
   }
 
@@ -87,32 +89,35 @@ class KPRScramble extends ScrambleEngine {
    * Performs the animation frame logic.
    */
   animate() {
-    // Calculate how many characters should be revealed this frame
-    const revealProgress = Math.floor(this.currentIterations);
+    // Interpolate visible character count from initialLen → targetLen across the animation.
+    const progress = this.transitionLength > 0 ? this.currentIterations / this.transitionLength : 1;
+    const currentLen = Math.round(
+      this._initialLen + (this.unpaddedLength - this._initialLen) * progress
+    );
 
-    const displayArrayCopy = [...this.displayArray]; // Work on a copy for safety
+    const revealProgress = Math.floor(this.currentIterations);
+    const displayArrayCopy = [...this.displayArray];
 
     for (let i = 0; i < this.transitionLength; i++) {
-      const isRevealed = this._isPositionRevealed(i, revealProgress);
+      if (i >= currentLen) {
+        displayArrayCopy[i] = ' ';
+        continue;
+      }
 
+      const isRevealed = this._isPositionRevealed(i, revealProgress);
       if (isRevealed) {
         displayArrayCopy[i] = this.paddedTarget[i];
       } else if (this.paddedTarget[i] !== ' ' || i >= this.unpaddedLength) {
-        // Still shuffling
         displayArrayCopy[i] = this.getRandomChar();
       } else {
         displayArrayCopy[i] = ' ';
       }
     }
 
-    // Single DOM update
-    let finalText = this._toString(displayArrayCopy).replace(/\s+$/, '');
-    this.element.textContent = finalText;
+    this.element.textContent = this._toString(displayArrayCopy).replace(/\s+$/, '');
 
-    // Update progress
     this.currentIterations += 1 / this.config.iterationsMultiplier;
 
-    // Completion check
     if (this.currentIterations >= this.transitionLength) {
       this.completeAnimation();
     }

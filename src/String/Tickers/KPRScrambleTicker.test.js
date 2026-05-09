@@ -81,6 +81,16 @@ describe('KPRScrambleTicker', () => {
     expect(ticker._isTickerActive).toBe(false);
   });
 
+  it('defaults transitionDuration to 0 to suppress opacity flash between cycles', () => {
+    ticker = new KPRScrambleTicker(element, { strings: STRINGS });
+    expect(ticker.config.transitionDuration).toBe(0);
+  });
+
+  it('honours explicit transitionDuration when provided', () => {
+    ticker = new KPRScrambleTicker(element, { strings: STRINGS, transitionDuration: 150 });
+    expect(ticker.config.transitionDuration).toBe(150);
+  });
+
   it('accepts custom options', () => {
     ticker = new KPRScrambleTicker(element, {
       strings: STRINGS,

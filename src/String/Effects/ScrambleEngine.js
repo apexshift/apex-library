@@ -124,7 +124,9 @@ class ScrambleEngine {
     // Animation state
     this.isRunning = false;
     this.requestId = null;
-    this.targetText = this.element.innerText.trim();
+    this.targetText = (
+      'targetText' in options ? options.targetText : this.element.innerText
+    ).trim();
     this.isComplete = false;
     this.initialText = ''; // For interpolation start
 

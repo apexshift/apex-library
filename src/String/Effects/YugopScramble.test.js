@@ -125,6 +125,66 @@ describe('YugopScramble', () => {
     expect(engine._isRevealComplete()).toBe(true);
   });
 
+  it('stores _initialLen and unpaddedLength in init()', () => {
+    engine.initialText = 'hi';
+    engine.setTargetText('hello');
+    engine.init();
+    expect(engine._initialLen).toBe(2);
+    expect(engine.unpaddedLength).toBe(5);
+  });
+
+  it('seeds _initialChars from initialText padded with waitChar', () => {
+    engine.initialText = 'hi';
+    engine.setTargetText('hello');
+    engine.init();
+    expect(engine._initialChars[0]).toBe('h');
+    expect(engine._initialChars[1]).toBe('i');
+    expect(engine._initialChars[2]).toBe(engine.config.waitChar);
+  });
+
+  it('_waveProgress returns 0 at ltr start and 1 at end', () => {
+    engine.initialText = 'hi';
+    engine.setTargetText('hello');
+    engine.init();
+    engine.rightFront = 0;
+    expect(engine._waveProgress()).toBeCloseTo(0);
+    engine.rightFront = engine.paddedTarget.length - 1;
+    expect(engine._waveProgress()).toBeCloseTo(1);
+  });
+
+  it('_isUnrevealed returns true for positions beyond the wave front (ltr)', () => {
+    engine.initialText = 'hi';
+    engine.setTargetText('hello');
+    engine.init();
+    engine.rightFront = 2;
+    expect(engine._isUnrevealed(3)).toBe(true);
+    expect(engine._isUnrevealed(2)).toBe(false);
+    expect(engine._isUnrevealed(1)).toBe(false);
+  });
+
+  it('growing: visible text length increases from initialLen as wave advances', () => {
+    engine.initialText = 'hi'; // 2
+    engine.setTargetText('hello'); // 5
+    engine.init();
+    engine.rightFront = 0;
+
+    // Manually compute: waveProgress=0/4=0, currentLen=round(2+3*0)=2
+    // Positions 2-4 should be hidden (set to ' ')
+    engine.animate();
+    expect(element.textContent.length).toBeLessThan(5);
+  });
+
+  it('shrinking: visible text length decreases toward targetLen as wave advances', () => {
+    engine.initialText = 'hello'; // 5
+    engine.setTargetText('hi'); // 2
+    engine.init();
+
+    while (!engine.isComplete) {
+      engine.animate();
+    }
+    expect(element.textContent).toBe('hi');
+  });
+
   it('stop resets animation state and clears internal arrays', () => {
     engine.paddedTarget = 'ok';
     engine.displayArray = ['o', 'k'];

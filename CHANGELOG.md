@@ -7,7 +7,7 @@ This project uses [Changesets](https://github.com/changesets/changesets) for ver
 
 ---
 
-## [0.2.0] — Unreleased
+## [0.2.1] — Unreleased
 
 ### Added
 

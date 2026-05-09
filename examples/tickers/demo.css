@@ -47,9 +47,8 @@
   min-height: 90px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 20px 0;
-  text-align: center;
   letter-spacing: -0.02em;
   color: var(--accent);
 }
@@ -102,9 +101,21 @@
   gap: 2px;
 }
 
-.event-log .entry { color: var(--text-dim); }
-.event-log .entry.start  { color: var(--accent); }
-.event-log .entry.cycle  { color: #60a5fa; }
-.event-log .entry.dwell  { color: #c084fc; }
-.event-log .entry.pause  { color: var(--warn); }
-.event-log .entry.stop   { color: var(--error); }
+.event-log .entry {
+  color: var(--text-dim);
+}
+.event-log .entry.start {
+  color: var(--accent);
+}
+.event-log .entry.cycle {
+  color: #60a5fa;
+}
+.event-log .entry.dwell {
+  color: #c084fc;
+}
+.event-log .entry.pause {
+  color: var(--warn);
+}
+.event-log .entry.stop {
+  color: var(--error);
+}

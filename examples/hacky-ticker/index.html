@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apex — HackyScrambleTicker</title>
+    <link rel="stylesheet" href="../shared.css" />
+    <link rel="stylesheet" href="demo.css" />
+  </head>
+  <body>
+    <a href="../" class="back-link">← All Examples</a>
+
+    <div class="container">
+      <h1>HackyScrambleTicker</h1>
+
+      <!-- ── Multi-line terminal cycling ──────────────────────────────── -->
+      <div class="demo">
+        <h2>Multi-line terminal</h2>
+        <p>Cycles through multi-line terminal strings. The spacer element holds the
+           layout height so no content shift occurs between strings.</p>
+        <div class="controls">
+          <button id="ml-init">Init</button>
+          <button id="ml-pause" disabled>Pause</button>
+          <button id="ml-resume" disabled>Resume</button>
+          <button id="ml-stop" disabled>Stop</button>
+          <button id="ml-destroy" disabled>Destroy</button>
+        </div>
+        <div id="ml-ticker" class="terminal hacky-wrapper">
+          <div class="hacky-spacer">BOOT — v0.2.1
+MODULES: LOADED
+MEMORY: CLEAR
+STATUS: ONLINE
+AWAITING INPUT_</div>
+          <div class="hacky-animation"></div>
+        </div>
+        <div id="ml-log" class="event-log"></div>
+      </div>
+
+      <!-- ── Single-line cycling ───────────────────────────────────────── -->
+      <div class="demo">
+        <h2>Single-line</h2>
+        <p>Shorter strings — uses the element directly, no spacer needed.</p>
+        <div class="controls">
+          <button id="sl-init">Init</button>
+          <button id="sl-pause" disabled>Pause</button>
+          <button id="sl-resume" disabled>Resume</button>
+          <button id="sl-stop" disabled>Stop</button>
+          <button id="sl-destroy" disabled>Destroy</button>
+        </div>
+        <div id="sl-ticker" class="terminal">ACCESS GRANTED</div>
+        <div id="sl-log" class="event-log"></div>
+      </div>
+
+      <!-- ── stopBehaviour playground ─────────────────────────────────── -->
+      <div class="demo">
+        <h2>stopBehaviour playground</h2>
+        <p>See how each stop mode resolves the animation.</p>
+        <div class="controls">
+          <label>
+            stopBehaviour:
+            <select id="stop-behaviour">
+              <option value="end" selected>end (default)</option>
+              <option value="hold">hold</option>
+              <option value="reset">reset</option>
+            </select>
+          </label>
+        </div>
+        <div class="controls">
+          <button id="stop-init">Init</button>
+          <button id="stop-stop" disabled>Stop</button>
+          <button id="stop-reinit">Re-init</button>
+        </div>
+        <div id="stop-ticker" class="terminal">ACCESS GRANTED</div>
+        <div id="stop-log" class="event-log"></div>
+      </div>
+    </div>
+
+    <script type="module" src="demo.js"></script>
+  </body>
+</html>

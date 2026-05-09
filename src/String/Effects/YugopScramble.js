@@ -65,6 +65,9 @@ class YugopScramble extends ScrambleEngine {
     this.paddedTarget = '';
     this.leftFront = 0;
     this.rightFront = 0;
+    this._initialLen = 0;
+    this.unpaddedLength = 0;
+    this._initialChars = [];
   }
 
   /**
@@ -76,6 +79,10 @@ class YugopScramble extends ScrambleEngine {
     if (this.isComplete) return;
 
     const len = Math.max(this.initialText.length, this.targetText.length);
+    this._initialLen = this.initialText.length;
+    this.unpaddedLength = this.targetText.length;
+    this._initialChars = this._toCharArray(this.initialText.padEnd(len, this.config.waitChar));
+
     this.paddedTarget = this.targetText.padEnd(len, this.config.padChar);
 
     this.displayArray = this._toCharArray(this.config.waitChar.repeat(len));
@@ -142,6 +149,22 @@ class YugopScramble extends ScrambleEngine {
     }
 
     this._fillUnrevealed();
+
+    // Organic length: interpolate visible character count from initialLen → targetLen as wave advances.
+    if (this._initialLen !== this.unpaddedLength) {
+      const currentLen = Math.round(
+        this._initialLen + (this.unpaddedLength - this._initialLen) * this._waveProgress()
+      );
+      const clampedLen = Math.max(0, Math.min(this.paddedTarget.length, currentLen));
+      for (let i = 0; i < this.paddedTarget.length; i++) {
+        if (i >= clampedLen) {
+          this.displayArray[i] = ' ';
+        } else if (this._isUnrevealed(i)) {
+          this.displayArray[i] = this._initialChars[i] ?? this.config.waitChar;
+        }
+      }
+    }
+
     this.element.textContent = this._toString(this.displayArray).replace(/\s+$/, '');
 
     if (isAllSettled && this._isRevealComplete()) {
@@ -212,6 +235,31 @@ class YugopScramble extends ScrambleEngine {
         if (i < this.leftFront) this.displayArray[i] = this.config.waitChar;
       }
     }
+  }
+
+  /**
+   * Returns wave completion as a 0–1 scalar, direction-aware.
+   * @returns {number}
+   * @private
+   */
+  _waveProgress() {
+    const len = this.paddedTarget.length;
+    if (len <= 1) return 1;
+    if (this.direction === 'rtl') return (len - 1 - this.leftFront) / (len - 1);
+    if (this.direction === 'center') return (this.rightFront - this.leftFront) / (len - 1);
+    return this.rightFront / (len - 1); // ltr
+  }
+
+  /**
+   * Returns true if position i has not yet been processed by the wave front.
+   * @param {number} i
+   * @returns {boolean}
+   * @private
+   */
+  _isUnrevealed(i) {
+    if (this.direction === 'ltr') return i > this.rightFront;
+    if (this.direction === 'rtl') return i < this.leftFront;
+    return i < this.leftFront || i > this.rightFront;
   }
 
   /**

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apex — HackyScramble</title>
+    <link rel="stylesheet" href="../shared.css" />
+    <link rel="stylesheet" href="demo.css" />
+  </head>
+  <body>
+    <a href="../" class="back-link">← All Examples</a>
+
+    <div class="container">
+      <h1>HackyScramble</h1>
+
+      <!-- ── Basic single-line ───────────────────────────────── -->
+      <div class="demo">
+        <h2>Single line</h2>
+        <p>Character-by-character reveal with a random glitch frontier.</p>
+        <div class="controls">
+          <button id="sl-run">Run</button>
+          <button id="sl-stop" disabled>Stop</button>
+          <div class="control-group">
+            <label>charInterval (ms/char)</label>
+            <input type="range" id="sl-speed" min="10" max="120" value="40" />
+            <span id="sl-speed-val">40</span>
+          </div>
+          <div class="control-group">
+            <label>glitchWidth</label>
+            <input type="range" id="sl-glitch" min="0" max="8" value="3" />
+            <span id="sl-glitch-val">3</span>
+          </div>
+        </div>
+        <div id="sl-output" class="terminal hacky-wrapper">
+          <div class="hacky-spacer">ACCESS GRANTED — APEX SYSTEM INITIALISED</div>
+          <div class="hacky-animation"></div>
+        </div>
+      </div>
+
+      <!-- ── Multi-line ─────────────────────────────────────── -->
+      <div class="demo">
+        <h2>Multi-line</h2>
+        <p>Lines reveal sequentially. Blank lines act as separators and are skipped instantly.</p>
+        <div class="controls">
+          <button id="ml-run">Run</button>
+          <button id="ml-stop" disabled>Stop</button>
+        </div>
+        <div id="ml-output" class="terminal hacky-wrapper">
+          <div class="hacky-spacer">// initializing
+new files detected in database
+
+kai_53815.jpg
+audio_log_2018116.wav
+
+activate console for access...</div>
+          <div class="hacky-animation"></div>
+        </div>
+      </div>
+
+      <!-- ── Speed playground ───────────────────────────────── -->
+      <div class="demo">
+        <h2>Speed &amp; noise playground</h2>
+        <p>Adjust speed and glitch width, then replay.</p>
+        <div class="controls">
+          <button id="pg-run">Run</button>
+          <button id="pg-stop" disabled>Stop</button>
+          <div class="control-group">
+            <label>charInterval: <span id="pg-speed-val">40</span>ms</label>
+            <input type="range" id="pg-speed" min="5" max="200" value="40" />
+          </div>
+          <div class="control-group">
+            <label>glitchWidth: <span id="pg-glitch-val">3</span></label>
+            <input type="range" id="pg-glitch" min="0" max="12" value="3" />
+          </div>
+        </div>
+        <div id="pg-output" class="terminal hacky-wrapper">
+          <div class="hacky-spacer">SYSTEM BOOT — v0.2.1
+LOADING MODULES...
+
+[OK] Core engine
+[OK] Event layer
+[OK] String effects
+
+READY.</div>
+          <div class="hacky-animation"></div>
+        </div>
+      </div>
+
+      <!-- ── Event log ──────────────────────────────────────── -->
+      <div class="demo">
+        <h2>Event log</h2>
+        <p>ScrambleEngine:start and ScrambleEngine:complete fire on each run.</p>
+        <div class="controls">
+          <button id="ev-run">Run</button>
+        </div>
+        <div id="ev-output" class="terminal hacky-wrapper">
+          <div class="hacky-spacer">hello world</div>
+          <div class="hacky-animation"></div>
+        </div>
+        <div id="ev-log" class="event-log"></div>
+      </div>
+    </div>
+
+    <script type="module" src="demo.js"></script>
+  </body>
+</html>

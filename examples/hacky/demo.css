@@ -1,0 +1,71 @@
+/* ── HackyScramble demo styles ───────────────────────────── */
+
+h1 { margin-top: 48px; }
+
+.demo > p {
+  font-size: 0.875rem;
+  color: var(--text-dim);
+  margin-bottom: 18px;
+}
+
+/* Terminal display block */
+.terminal {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--accent);
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 24px;
+  white-space: pre;
+  min-height: 80px;
+  margin-top: 16px;
+  letter-spacing: 0.02em;
+}
+
+/* CLS-safe two-element pattern: spacer holds layout height, animation overlays */
+.hacky-wrapper {
+  position: relative;
+  overflow: hidden;
+  white-space: normal; /* collapses whitespace-only text nodes between block children */
+}
+.hacky-spacer {
+  visibility: hidden;
+  white-space: pre;
+  pointer-events: none;
+  user-select: none;
+}
+.hacky-animation {
+  position: absolute;
+  inset: 0;
+  padding: inherit;
+  white-space: pre;
+}
+
+/* Slider value readout */
+input[type='range'] + span {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  min-width: 28px;
+  display: inline-block;
+}
+
+/* Event log */
+.event-log {
+  margin-top: 12px;
+  max-height: 120px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+.event-log .entry { padding: 2px 0; }
+.event-log .entry.start  { color: var(--accent); }
+.event-log .entry.complete { color: #60a5fa; }

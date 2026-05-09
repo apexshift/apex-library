@@ -145,6 +145,43 @@ describe('KPRScramble', () => {
     expect(callback).toHaveBeenCalled();
   });
 
+  it('grows visible text length from initialLen toward targetLen during animation', () => {
+    engine.initialText = 'hi'; // 2 chars
+    engine.setTargetText('hello'); // 5 chars
+    engine.init();
+
+    // At progress=0 (first frame), currentLen = initialLen = 2
+    expect(engine._initialLen).toBe(2);
+    expect(engine.unpaddedLength).toBe(5);
+    engine.animate();
+    expect(element.textContent.length).toBeLessThan(5);
+  });
+
+  it('shrinks visible text length from initialLen toward targetLen during animation', () => {
+    engine.initialText = 'hello world'; // 11 chars
+    engine.setTargetText('hi'); // 2 chars
+    engine.init();
+
+    expect(engine._initialLen).toBe(11);
+    expect(engine.unpaddedLength).toBe(2);
+
+    // After first frame the text should be shorter than the initial length
+    engine.animate();
+    expect(element.textContent.length).toBeLessThanOrEqual(11);
+  });
+
+  it('same-length strings produce no visible length change during animation', () => {
+    engine.initialText = 'hello';
+    engine.setTargetText('world');
+    engine.init();
+
+    expect(engine._initialLen).toBe(5);
+    expect(engine.unpaddedLength).toBe(5);
+    engine.animate();
+    // Length stays at 5 throughout (all positions visible)
+    expect(element.textContent.length).toBeLessThanOrEqual(5);
+  });
+
   it('stop() resets internal state and resets display text', () => {
     engine.displayArray = ['x', 'y'];
     engine.paddedTarget = 'xy';

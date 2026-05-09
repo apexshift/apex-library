@@ -32,6 +32,11 @@ export function createTicker(BaseEffect) {
         throw new Error(`${new.target.name}: "strings" must be a non-empty array`);
       }
 
+      // Suppress opacity flash between cycles; callers can override by passing transitionDuration explicitly.
+      if (!('transitionDuration' in effectOptions)) {
+        effectOptions.transitionDuration = 0;
+      }
+
       super(element, effectOptions);
 
       this._strings = strings;
