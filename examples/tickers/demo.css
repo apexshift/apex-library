@@ -1,0 +1,110 @@
+.intro {
+  color: var(--text-dim);
+  max-width: 620px;
+  margin-bottom: 40px;
+  font-size: 0.95rem;
+}
+
+.string-editor {
+  margin-bottom: 48px;
+}
+
+.string-editor label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.string-editor .label-hint {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.string-editor textarea {
+  width: 100%;
+  max-width: 480px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border-mid);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  padding: 10px 14px;
+  border-radius: 8px;
+  resize: vertical;
+  outline: none;
+}
+
+.string-editor textarea:focus {
+  border-color: var(--accent);
+}
+
+.effect {
+  font-size: 3rem;
+  font-weight: 700;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+
+.desc {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  margin-bottom: 12px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--text-dim);
+}
+
+.controls select {
+  background: var(--surface-alt);
+  border: 1px solid var(--border-mid);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.event-log {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  min-height: 40px;
+  max-height: 80px;
+  overflow-y: auto;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.event-log .entry { color: var(--text-dim); }
+.event-log .entry.start  { color: var(--accent); }
+.event-log .entry.cycle  { color: #60a5fa; }
+.event-log .entry.dwell  { color: #c084fc; }
+.event-log .entry.pause  { color: var(--warn); }
+.event-log .entry.stop   { color: var(--error); }

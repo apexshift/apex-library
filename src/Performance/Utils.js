@@ -167,13 +167,3 @@ export const debounce = (fn, wait, options = {}) => {
 
   return debounced;
 };
-
-export const getAverageFPS = () => {};
-
-export const getFPS = () => {};
-
-export const getMS = () => {};
-
-export const getAverageMS = () => {};
-
-export const getPerformanceData = () => {};

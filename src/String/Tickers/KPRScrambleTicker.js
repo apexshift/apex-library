@@ -1,9 +1,6 @@
 import { KPRScramble } from '../Effects/KPRScramble.js';
+import { createTicker } from './ScrambleTicker.js';
 
-class KPRScrambleTicker extends KPRScramble {
-  constructor() {
-    super(...arguments);
-  }
-}
+class KPRScrambleTicker extends createTicker(KPRScramble) {}
 
 export { KPRScrambleTicker };

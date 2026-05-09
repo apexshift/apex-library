@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apex Tickers — Live Demo</title>
+    <link rel="stylesheet" href="../shared.css" />
+    <link rel="stylesheet" href="demo.css" />
+  </head>
+  <body>
+    <a href="../" class="back-link">← All Examples</a>
+    <div class="container">
+      <h1>Apex Library — Tickers Demo</h1>
+      <p class="intro">
+        Tickers extend the scramble effects to automatically cycle through an array of strings.
+        Each transition uses the underlying scramble animation, with a configurable dwell time
+        between cycles.
+      </p>
+
+      <!-- Shared string dataset -->
+      <div class="string-editor">
+        <label for="string-input">Strings <span class="label-hint">(one per line — applied on next Init)</span></label>
+        <textarea id="string-input" rows="5" spellcheck="false">Creative Developer
+Motion Designer
+Frontend Engineer
+Visual Storyteller</textarea>
+      </div>
+
+      <!-- YugopScrambleTicker -->
+      <div class="demo">
+        <h2>YugopScrambleTicker</h2>
+        <p class="desc">Directional reveal cycling through strings.</p>
+        <div id="yugop-ticker" class="effect">—</div>
+        <div class="controls">
+          <button id="yugop-init">Init</button>
+          <button id="yugop-pause" disabled>Pause</button>
+          <button id="yugop-resume" disabled>Resume</button>
+          <button id="yugop-stop" disabled>Stop</button>
+          <button id="yugop-destroy" disabled>Destroy</button>
+        </div>
+        <div class="event-log" id="yugop-log"></div>
+      </div>
+
+      <!-- KPRScrambleTicker -->
+      <div class="demo">
+        <h2>KPRScrambleTicker</h2>
+        <p class="desc">High-energy shuffle cycling through strings.</p>
+        <div id="kpr-ticker" class="effect">—</div>
+        <div class="controls">
+          <button id="kpr-init">Init</button>
+          <button id="kpr-pause" disabled>Pause</button>
+          <button id="kpr-resume" disabled>Resume</button>
+          <button id="kpr-stop" disabled>Stop</button>
+          <button id="kpr-destroy" disabled>Destroy</button>
+        </div>
+        <div class="event-log" id="kpr-log"></div>
+      </div>
+
+      <!-- WriterScrambleTicker -->
+      <div class="demo">
+        <h2>WriterScrambleTicker</h2>
+        <p class="desc">Typewriter effect cycling through strings.</p>
+        <div id="writer-ticker" class="effect">—</div>
+        <div class="controls">
+          <button id="writer-init">Init</button>
+          <button id="writer-pause" disabled>Pause</button>
+          <button id="writer-resume" disabled>Resume</button>
+          <button id="writer-stop" disabled>Stop</button>
+          <button id="writer-destroy" disabled>Destroy</button>
+        </div>
+        <div class="event-log" id="writer-log"></div>
+      </div>
+
+      <!-- stopBehaviour playground -->
+      <div class="demo">
+        <h2>stopBehaviour Playground</h2>
+        <p class="desc">Explore how different <code>stopBehaviour</code> values affect stop().</p>
+        <div id="stop-ticker" class="effect">—</div>
+        <div class="controls">
+          <label>
+            stopBehaviour:
+            <select id="stop-behaviour">
+              <option value="end" selected>end (default)</option>
+              <option value="hold">hold</option>
+              <option value="reset">reset</option>
+            </select>
+          </label>
+        </div>
+        <div class="controls">
+          <button id="stop-init">Init</button>
+          <button id="stop-stop" disabled>Stop</button>
+          <button id="stop-reinit">Re-init</button>
+        </div>
+        <div class="event-log" id="stop-log"></div>
+      </div>
+    </div>
+
+    <script type="module" src="demo.js"></script>
+  </body>
+</html>

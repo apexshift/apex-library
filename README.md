@@ -2,7 +2,7 @@
 
 **A modular, tree-shakable vanilla JavaScript library for animation utilities, text effects, easing, and smart dependency management.**
 
-![Version](https://img.shields.io/badge/version-0.1.1-blue)
+![Version](https://img.shields.io/badge/version-0.2.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Tests](https://img.shields.io/badge/tests-149%20passing-brightgreen)
 ![Build](https://github.com/apexshift/apex-library/actions/workflows/ci.yml/badge.svg)
@@ -13,14 +13,17 @@
 
 Apex is a collection of focused, production-ready JavaScript modules built for creative web projects. Each module is independently importable — you only ship what you use.
 
-The library covers four areas:
+The library covers six areas:
 
 | Namespace        | What it does                                            |
 | ---------------- | ------------------------------------------------------- |
 | `String/Effects` | Character-level text scramble and typewriter animations |
+| `String/Tickers` | Auto-cycling text animations with playback controls     |
 | `Maths`          | Easing functions and cubic bezier curve sampling        |
 | `Event`          | Lightweight pub/sub event emitter                       |
 | `Core`           | Smart lazy-loader for GSAP, Lenis, and all GSAP plugins |
+| `Performance`    | Throttle and debounce utilities                         |
+| `DX`             | Developer experience tools (ContainerObserver)          |
 
 Everything is ESM-first, side-effect free (`"sideEffects": false`), and built with Vite.
 
@@ -34,6 +37,16 @@ Everything is ESM-first, side-effect free (`"sideEffects": false`), and built wi
 - Shared `ScrambleEngine` base — consistent API across all effects
 - `requestAnimationFrame`-driven rendering with minimal DOM writes
 - Accessible `aria-live` output
+
+**Tickers**
+
+- Auto-cycling variants of each scramble effect: `KPRScrambleTicker`, `WriterScrambleTicker`, `YugopScrambleTicker`
+- Cycles through a `strings` array, scrambling into each value after a configurable `dwell` time
+- Full playback controls: `init()`, `pause()`, `resume()`, `stop()`, `destroy()`
+- `stopBehaviour: 'end' | 'hold' | 'reset'` controls where the ticker lands when stopped
+- `initialContent` option controls the starting state before the first scramble
+- Rich event surface: `Ticker:start`, `Ticker:cycle`, `Ticker:cycleComplete`, `Ticker:dwellStart`, `Ticker:dwellComplete`, `Ticker:pause`, `Ticker:resume`, `Ticker:stop`, `Ticker:complete`
+- Shared `createTicker(BaseEffect)` mixin for extending any future scramble effect
 
 **Easing**
 
@@ -80,6 +93,32 @@ Apex requires a modern bundler (Vite, Rollup, Webpack 5+) that supports ES modul
 ---
 
 ## Quick Usage
+
+### Tickers
+
+```js
+import { KPRScrambleTicker } from 'apex/String/Tickers/KPRScrambleTicker.js';
+
+const ticker = new KPRScrambleTicker(document.getElementById('headline'), {
+  strings: ['Creative Developer', 'Motion Designer', 'Frontend Engineer'],
+  dwell: 2000,
+  loop: true,
+  stopBehaviour: 'end',
+});
+
+ticker.init();
+
+// Playback controls
+ticker.pause();
+ticker.resume();
+ticker.stop();
+ticker.destroy();
+
+// Events
+document.getElementById('headline').addEventListener('Ticker:cycle', (e) => {
+  console.log(`Now showing: ${e.detail.value}`);
+});
+```
 
 ### Text Effects
 
@@ -184,6 +223,39 @@ const { gsap, lenis, ScrollTrigger } = await dm.init({
 
 All effects dispatch `ScrambleEngine:start` and `ScrambleEngine:complete` DOM custom events and support `onStart`, `onFrame`, and `onComplete` config hooks.
 
+### `String/Tickers`
+
+| Export                  | Description                                                         |
+| ----------------------- | ------------------------------------------------------------------- |
+| `KPRScrambleTicker`     | KPRScramble extended with auto-cycling and playback controls        |
+| `WriterScrambleTicker`  | WriterScramble extended with auto-cycling and playback controls     |
+| `YugopScrambleTicker`   | YugopScramble extended with auto-cycling and playback controls      |
+| `createTicker(Base)`    | Mixin factory — apply Ticker behaviour to any ScrambleEngine effect |
+
+**Constructor options** (in addition to the underlying effect's options):
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `strings` | `string[]` | required | Strings to cycle through |
+| `dwell` | `number` | `2000` | Ms between cycles (starts after scramble resolves) |
+| `loop` | `boolean` | `true` | Loop back to first string after last |
+| `stopBehaviour` | `'end'\|'hold'\|'reset'` | `'end'` | Where to land when `stop()` is called |
+| `initialContent` | `false\|'auto'\|string` | `false` | Starting content before first scramble |
+
+**Ticker events** (dispatched as DOM `CustomEvent` on the element):
+
+| Event | Fires when |
+|---|---|
+| `Ticker:start` | `init()` is called |
+| `Ticker:cycle` | A new scramble begins (`detail: { index, value }`) |
+| `Ticker:cycleComplete` | Scramble fully resolves |
+| `Ticker:dwellStart` | Dwell timer begins |
+| `Ticker:dwellComplete` | Dwell timer expires, next scramble about to fire |
+| `Ticker:pause` | Ticker suspends after current scramble |
+| `Ticker:resume` | `resume()` is called |
+| `Ticker:stop` | Stop sequence completes |
+| `Ticker:complete` | Full array exhausted (non-looping only) |
+
 ### `Maths`
 
 | Class         | Description                                                                              |
@@ -245,15 +317,18 @@ Please run `pnpm lint` and `pnpm test:ci` before submitting a pull request. Comm
 | Area                         | Status                                     |
 | ---------------------------- | ------------------------------------------ |
 | String Effects (3 engines)   | Stable                                     |
+| String Tickers (3 engines)   | Stable                                     |
 | Maths / Ease (40+ functions) | Stable                                     |
 | Maths / CubicBezier          | Stable                                     |
 | EventEmitter                 | Stable                                     |
+| Performance (throttle, debounce) | Stable                                 |
+| DX / ContainerObserver       | Stable                                     |
 | DependencyManager            | Stable                                     |
 | TypeScript declarations      | Stable — `.d.ts` emitted on every build    |
 | npm publish / versioning     | Configured (Changesets), not yet published |
-| Test coverage                | 149 tests passing across all modules       |
+| Test coverage                | Tests passing across all modules           |
 
-**Current version:** `0.1.1` — pre-release. API is stable but not yet published to the npm registry.
+**Current version:** `0.2.0` — pre-release. API is stable but not yet published to the npm registry.
 
 ---
 

@@ -14,7 +14,7 @@ const Apex = {
   Performance,
   String,
 };
-Apex.version = '0.1.1';
+Apex.version = '0.2.0';
 
 export { Apex as Apex, Apex as default };
 export {

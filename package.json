@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Apex - High-performance vanilla JS library for text effects and more",
   "type": "module",
   "main": "./dist/index.js",
@@ -9,10 +9,14 @@
   "exports": {
     ".": "./dist/index.js",
     "./Core": "./dist/Core/index.js",
+    "./DX": "./dist/DX/index.js",
     "./Event": "./dist/Event/index.js",
     "./Maths": "./dist/Maths/index.js",
+    "./Performance": "./dist/Performance/index.js",
     "./String/Effects": "./dist/String/Effects/index.js",
-    "./String/Effects/*": "./dist/String/Effects/*.js"
+    "./String/Effects/*": "./dist/String/Effects/*.js",
+    "./String/Tickers": "./dist/String/Tickers/index.js",
+    "./String/Tickers/*": "./dist/String/Tickers/*.js"
   },
   "sideEffects": false,
   "files": [

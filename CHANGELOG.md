@@ -7,6 +7,31 @@ This project uses [Changesets](https://github.com/changesets/changesets) for ver
 
 ---
 
+## [0.2.0] — Unreleased
+
+### Added
+
+- `String/Tickers` — `KPRScrambleTicker`, `WriterScrambleTicker`, `YugopScrambleTicker`: auto-cycling variants of each scramble effect that transition through a `strings` array using the underlying scramble animation
+- `String/Tickers` — `createTicker(BaseEffect)` mixin factory for applying Ticker behaviour to any ScrambleEngine subclass
+- `String/Tickers` — full playback controls: `init()`, `pause()`, `resume()`, `stop()`, `destroy()`
+- `String/Tickers` — `stopBehaviour: 'end' | 'hold' | 'reset'` option (default `'end'`) controlling where the ticker lands on `stop()`
+- `String/Tickers` — `initialContent: false | 'auto' | string` option controlling the element state before the first scramble
+- `String/Tickers` — `dwell` (ms) and `loop` options; dwell timer starts after each scramble fully resolves
+- `String/Tickers` — event surface: `Ticker:start`, `Ticker:cycle`, `Ticker:cycleComplete`, `Ticker:dwellStart`, `Ticker:dwellComplete`, `Ticker:pause`, `Ticker:resume`, `Ticker:stop`, `Ticker:complete`
+- `DX/ContainerObserver` — now exposed via the `apex/DX` export path
+- `Performance` — now exposed via the `apex/Performance` export path
+
+### Changed
+
+- `Core/DependencyManager` — default config (`src/config/dependencies.json`) slimmed to GSAP + Lenis + ScrollTrigger; `dependencies.sample.json` now serves as the full 23-plugin reference
+- `package.json` exports map — added `./DX`, `./Performance`, `./String/Tickers`, and `./String/Tickers/*`
+
+### Removed
+
+- `Performance/Utils` — removed five unimplemented stub functions: `getAverageFPS`, `getFPS`, `getMS`, `getAverageMS`, `getPerformanceData`
+
+---
+
 ## [0.1.1] — Unreleased
 
 Initial pre-release. API is stable but not yet published to the npm registry.

@@ -1,9 +1,1 @@
-export {
-  throttle,
-  debounce,
-  getAverageFPS,
-  getFPS,
-  getMS,
-  getAverageMS,
-  getPerformanceData,
-} from './Utils';
+export { throttle, debounce } from './Utils';
